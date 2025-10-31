@@ -1,0 +1,80 @@
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue';
+import { Link } from '@inertiajs/vue3';
+import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
+import { useShopStore } from '@/stores/useShopStore';
+
+const shopStore = useShopStore();
+shopStore.initialize();
+
+const { favorites, favoritesCount } = storeToRefs(shopStore);
+
+const hasFavorites = computed(() => favorites.value.length > 0);
+
+const priceFormatter = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    maximumFractionDigits: 0,
+});
+
+const formatCurrency = (value) => priceFormatter.format(value ?? 0);
+
+const toggleFavorite = (item) => {
+    shopStore.toggleFavorite(item);
+};
+</script>
+
+<template>
+    <AppLayout title="Избранное - СантехникаЧелябинск">
+        <section class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+            <div class="container mx-auto px-4">
+                <h1 class="text-4xl font-bold">Избранные товары</h1>
+                <p class="mt-2 text-blue-100">{{ favoritesCount }} товар(ов) в списке</p>
+            </div>
+        </section>
+
+        <div class="container mx-auto px-4 py-12">
+            <div v-if="hasFavorites" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article
+                    v-for="item in favorites"
+                    :key="item.id"
+                    class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+                >
+                    <Link :href="`/products/${item.id}`" class="block">
+                        <div class="relative h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                            <img
+                                v-if="item.image"
+                                :src="item.image"
+                                :alt="item.title"
+                                class="object-cover w-full h-full"
+                            />
+                            <i v-else class="fas fa-faucet text-6xl text-gray-300"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-semibold text-lg mb-2 text-gray-900 group-hover:text-primary transition-colors">
+                                {{ item.title }}
+                            </h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-primary font-semibold text-lg">
+                                    {{ formatCurrency(item.final_price ?? item.price) }}
+                                </span>
+                                <button
+                                    type="button"
+                                    class="text-red-500 hover:text-red-600 transition-colors"
+                                    @click.prevent="toggleFavorite(item)"
+                                >
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </Link>
+                </article>
+            </div>
+            <div v-else class="bg-white rounded-2xl shadow-sm p-12 text-center text-gray-500">
+                В избранном пока пусто. Добавьте понравившиеся товары из <Link href="/catalog" class="text-primary hover:underline">каталога</Link>.
+            </div>
+        </div>
+    </AppLayout>
+</template>
+

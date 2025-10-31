@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@theme {
+    --color-primary: #3B82F6;
+    --color-secondary: #1E40AF;
+    --color-accent: #F59E0B;
+}
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+    border-color: #e5e7eb;
+}
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
