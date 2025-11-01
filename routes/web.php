@@ -78,6 +78,31 @@ $mapProduct = static function (Product $product) use ($mapCategory, $mapReview, 
     ];
 };
 
+$mapProductPreview = static function (Product $product) use ($assetPath): array {
+    $images = collect($product->images ?? [])
+        ->map($assetPath)
+        ->filter()
+        ->values();
+
+    return [
+        'id' => $product->id,
+        'title' => $product->title,
+        'slug' => $product->slug,
+        'article_id' => $product->article_id,
+        'price' => (float) $product->price,
+        'final_price' => round($product->price * (100 - $product->discount) / 100, 2),
+        'discount' => (int) $product->discount,
+        'image' => $images->first(),
+        'images' => $images->all(),
+        'category' => $product->relationLoaded('category') && $product->category
+            ? [
+                'id' => $product->category->id,
+                'title' => $product->category->title,
+            ]
+            : null,
+    ];
+};
+
 $normalizeTags = static function (?array $tags): array {
     return collect($tags ?? [])
         ->map(function ($tag) {
@@ -249,6 +274,36 @@ Route::get('/favorites', function () {
 Route::get('/cart', function () {
     return Inertia::render('Cart');
 })->name('cart');
+
+Route::get('/search/suggestions', function (Request $request) use ($mapProductPreview) {
+    $query = trim((string) $request->query('q', ''));
+
+    if ($query === '') {
+        return response()->json([
+            'data' => [],
+        ]);
+    }
+
+    $products = Product::query()
+        ->active()
+        ->with(['category' => fn ($relation) => $relation->select('id', 'title')])
+        ->where(function (Builder $builder) use ($query) {
+            $like = '%' . $query . '%';
+
+            $builder->where('title', 'like', $like)
+                ->orWhere('article_id', 'like', $like)
+                ->orWhere('slug', 'like', $like);
+        })
+        ->orderByRaw('CASE WHEN article_id = ? THEN 0 ELSE 1 END', [$query])
+        ->orderByDesc('discount')
+        ->orderBy('title')
+        ->take(8)
+        ->get();
+
+    return response()->json([
+        'data' => $products->map($mapProductPreview)->all(),
+    ]);
+})->name('search.suggestions');
 
 Route::get('/search', function (Request $request) use ($mapProduct, $mapNews) {
     $query = trim((string) $request->query('q', ''));

@@ -1,6 +1,6 @@
 <script setup>
 import { Link, router } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { ref, watch, computed, onMounted, onBeforeUnmount, nextTick } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useShopStore } from '@/stores/useShopStore';
 
@@ -17,6 +17,127 @@ shopStore.initialize();
 
 const { cartCount, favoritesCount } = storeToRefs(shopStore);
 
+const MIN_QUERY_LENGTH = 2;
+const suggestions = ref([]);
+const isSuggestionsOpen = ref(false);
+const isSuggestionsLoading = ref(false);
+const searchError = ref('');
+const showMobileModal = ref(false);
+const isMobileScreen = ref(false);
+const desktopSearchWrapper = ref(null);
+const mobileSearchInput = ref(null);
+
+let fetchSuggestionsTimeoutId = null;
+let activeAbortController = null;
+
+const priceFormatter = new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    maximumFractionDigits: 0,
+});
+
+const formatCurrency = (value) => priceFormatter.format(value ?? 0);
+
+const getSuggestionImage = (product) => {
+    if (!product) {
+        return null;
+    }
+
+    if (Array.isArray(product.images) && product.images.length > 0) {
+        return product.images[0];
+    }
+
+    return product.image ?? null;
+};
+
+const hasSuggestions = computed(() => suggestions.value.length > 0);
+const showDesktopSuggestions = computed(
+    () => !isMobileScreen.value && isSuggestionsOpen.value && (hasSuggestions.value || searchError.value || isSuggestionsLoading.value),
+);
+
+const updateScreen = () => {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    isMobileScreen.value = window.matchMedia('(max-width: 767px)').matches;
+};
+
+const clearFetchTimeout = () => {
+    if (fetchSuggestionsTimeoutId) {
+        clearTimeout(fetchSuggestionsTimeoutId);
+        fetchSuggestionsTimeoutId = null;
+    }
+};
+
+const cancelActiveRequest = () => {
+    if (activeAbortController) {
+        activeAbortController.abort();
+        activeAbortController = null;
+    }
+};
+
+const scheduleFetchSuggestions = (query) => {
+    clearFetchTimeout();
+
+    if (query.length < MIN_QUERY_LENGTH) {
+        suggestions.value = [];
+        isSuggestionsOpen.value = false;
+        searchError.value = '';
+        cancelActiveRequest();
+        return;
+    }
+
+    fetchSuggestionsTimeoutId = setTimeout(() => {
+        fetchSuggestions(query);
+    }, 250);
+};
+
+const fetchSuggestions = async (query) => {
+    if (typeof window === 'undefined') {
+        return;
+    }
+
+    cancelActiveRequest();
+    activeAbortController = new AbortController();
+    isSuggestionsLoading.value = true;
+    searchError.value = '';
+    isSuggestionsOpen.value = true;
+
+    try {
+        const response = await fetch(`/search/suggestions?q=${encodeURIComponent(query)}`, {
+            headers: {
+                Accept: 'application/json',
+            },
+            signal: activeAbortController.signal,
+        });
+
+        if (!response.ok) {
+            throw new Error(`Ошибка загрузки (${response.status})`);
+        }
+
+        const payload = await response.json();
+
+        if (searchQuery.value.trim() !== query) {
+            return;
+        }
+
+        suggestions.value = Array.isArray(payload?.data) ? payload.data : [];
+        isSuggestionsOpen.value = true;
+    } catch (error) {
+        if (error?.name === 'AbortError') {
+            return;
+        }
+
+        console.error('SEARCH::SUGGEST_ERROR', error);
+        searchError.value = 'Не удалось загрузить результаты';
+        isSuggestionsOpen.value = true;
+    } finally {
+        isSuggestionsLoading.value = false;
+        activeAbortController = null;
+    }
+};
+
 const handleSearch = () => {
     const query = searchQuery.value.trim();
 
@@ -24,7 +145,66 @@ const handleSearch = () => {
         return;
     }
 
+    closeMobileModal();
     router.get('/search', { q: query }, { preserveState: true, replace: true });
+};
+
+const handleFocusSearch = () => {
+    if (isMobileScreen.value) {
+        openMobileModal();
+        return;
+    }
+
+    if (hasSuggestions.value || searchError.value) {
+        isSuggestionsOpen.value = true;
+    }
+};
+
+const handleBlurSearch = () => {
+    if (isMobileScreen.value) {
+        return;
+    }
+
+    setTimeout(() => {
+        isSuggestionsOpen.value = false;
+    }, 150);
+};
+
+const handleClickOutside = (event) => {
+    if (!desktopSearchWrapper.value || isMobileScreen.value) {
+        return;
+    }
+
+    if (desktopSearchWrapper.value.contains(event.target)) {
+        return;
+    }
+
+    isSuggestionsOpen.value = false;
+};
+
+const closeSuggestions = () => {
+    isSuggestionsOpen.value = false;
+};
+
+const openMobileModal = () => {
+    showMobileModal.value = true;
+    isSuggestionsOpen.value = true;
+
+    nextTick(() => {
+        if (mobileSearchInput.value) {
+            mobileSearchInput.value.focus({ preventScroll: true });
+        }
+    });
+};
+
+const closeMobileModal = () => {
+    showMobileModal.value = false;
+    closeSuggestions();
+};
+
+const handleSuggestionSelect = () => {
+    closeSuggestions();
+    closeMobileModal();
 };
 
 watch(
@@ -35,6 +215,40 @@ watch(
         }
     },
 );
+
+watch(searchQuery, (value) => {
+    const query = value.trim();
+    scheduleFetchSuggestions(query);
+});
+
+watch(showMobileModal, (isOpen) => {
+    if (isOpen) {
+        nextTick(() => {
+            if (mobileSearchInput.value) {
+                mobileSearchInput.value.focus({ preventScroll: true });
+            }
+        });
+    }
+});
+
+onMounted(() => {
+    updateScreen();
+    if (typeof window !== 'undefined') {
+        window.addEventListener('resize', updateScreen, { passive: true });
+    }
+
+    document.addEventListener('click', handleClickOutside, true);
+});
+
+onBeforeUnmount(() => {
+    if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', updateScreen);
+    }
+
+    document.removeEventListener('click', handleClickOutside, true);
+    clearFetchTimeout();
+    cancelActiveRequest();
+});
 </script>
 
 <template>
@@ -63,71 +277,149 @@ watch(
             <!-- Main header -->
             <div class="max-md:flex-col max-md:gap-5 flex justify-between items-center py-4">
                 <Link href="/" class="hover:opacity-80 flex items-center transition-opacity">
-                <div class="from-primary to-secondary p-3 mr-4 text-white bg-gradient-to-r rounded-lg">
-                    <i class="fas fa-wrench text-2xl"></i>
-                </div>
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-800">СантехникаЧелябинск</h1>
-                    <p class="text-sm text-gray-600">ВОДА и ТЕПЛО в вашем доме</p>
-                </div>
+                    <div class="from-primary to-secondary p-3 mr-4 text-white bg-gradient-to-r rounded-lg">
+                        <i class="fas fa-wrench text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">СантехникаЧелябинск</h1>
+                        <p class="text-sm text-gray-600">ВОДА и ТЕПЛО в вашем доме</p>
+                    </div>
                 </Link>
 
-                <div class="max-md:flex hidden gap-5 justify-between items-center">
-                    <div class="flex-1 w-full max-w-xl">
-                        <form @submit.prevent="handleSearch" class="relative">
-                            <input v-model="searchQuery" type="text" placeholder="Поиск товаров..." class="focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent px-4 py-3 pl-12 w-full rounded-lg border border-gray-300" />
-                            <i class="fas fa-search absolute left-4 top-1/2 text-gray-400 transform -translate-y-1/2"></i>
-                        </form>
-                    </div>
+                <div class="max-md:flex hidden gap-5 justify-between items-center w-full">
+                    <button
+                        type="button"
+                        class="touch-manipulation focus:outline-none focus:ring-2 focus:ring-primary relative flex-1 px-4 py-3 w-full max-w-xl text-sm text-left text-gray-600 bg-white rounded-lg border border-gray-300 transition"
+                        @click="openMobileModal"
+                    >
+                        <i class="fas fa-search absolute left-4 top-1/2 text-gray-400 -translate-y-1/2"></i>
+                        <span v-if="!searchQuery" class="block ml-8 text-gray-500 truncate">Поиск товаров...</span>
+                        <span v-else class="block ml-8 text-gray-800 truncate">{{ searchQuery }}</span>
+                    </button>
 
                     <div class="flex items-center space-x-6">
                         <Link href="/favorites" class="relative">
-                        <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
-                            <i class="fas fa-heart mr-2 text-xl"></i>
-                            <span class="md:block hidden">Избранное</span>
-                            <span v-if="favoritesCount > 0" class="bg-primary flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full">
-                                {{ favoritesCount }}
-                            </span>
-                        </div>
+                            <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
+                                <i class="fas fa-heart mr-2 text-xl"></i>
+                                <span class="md:block hidden">Избранное</span>
+                                <span
+                                    v-if="favoritesCount > 0"
+                                    class="bg-primary flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
+                                >
+                                    {{ favoritesCount }}
+                                </span>
+                            </div>
                         </Link>
 
                         <Link href="/cart" class="relative">
-                        <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
-                            <i class="fas fa-shopping-cart mr-2 text-xl"></i>
-                            <span class="md:block hidden">Корзина</span>
-                            <span v-if="cartCount > 0" class="bg-accent flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full">
-                                {{ cartCount }}
-                            </span>
-                        </div>
+                            <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
+                                <i class="fas fa-shopping-cart mr-2 text-xl"></i>
+                                <span class="md:block hidden">Корзина</span>
+                                <span
+                                    v-if="cartCount > 0"
+                                    class="bg-accent flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
+                                >
+                                    {{ cartCount }}
+                                </span>
+                            </div>
                         </Link>
                     </div>
                 </div>
-                <div class="max-md:hidden flex-1 mx-8 max-w-xl">
-                    <form @submit.prevent="handleSearch" class="relative">
-                        <input v-model="searchQuery" type="text" placeholder="Поиск товаров..." class="focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent px-4 py-3 pl-12 w-full rounded-lg border border-gray-300" />
-                        <i class="fas fa-search absolute left-4 top-1/2 text-gray-400 transform -translate-y-1/2"></i>
+
+                <div ref="desktopSearchWrapper" class="max-md:hidden flex relative flex-1 mx-8 w-full max-w-xl">
+                    <form @submit.prevent="handleSearch" class="relative w-full">
+                        <input
+                            v-model="searchQuery"
+                            type="search"
+                            placeholder="Поиск товаров..."
+                            class="focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary px-4 py-3 pl-12 w-full text-sm rounded-lg border border-gray-300"
+                            @focus="handleFocusSearch"
+                            @blur="handleBlurSearch"
+                            autocomplete="off"
+                        />
+                        <i class="fas fa-search absolute left-4 top-1/2 text-gray-400 -translate-y-1/2"></i>
                     </form>
+
+                    <div
+                        v-if="showDesktopSuggestions"
+                        class="overflow-hidden absolute right-0 left-0 top-full z-50 mt-2 bg-white rounded-2xl border border-gray-200 shadow-2xl"
+                    >
+                        <div v-if="searchError && !isSuggestionsLoading" class="px-4 py-2 text-xs text-red-600 bg-red-50 border-b border-red-100">
+                            {{ searchError }}
+                        </div>
+                        <div v-if="isSuggestionsLoading" class="p-4 text-sm text-gray-500">Ищем товары…</div>
+                        <template v-else>
+                            <ul v-if="hasSuggestions" class="divide-y divide-gray-100">
+                                <li v-for="product in suggestions" :key="product.id" class="hover:bg-gray-50">
+                                    <Link
+                                        :href="`/products/${product.id}`"
+                                        class="flex gap-4 items-center px-4 py-3"
+                                        @click="handleSuggestionSelect"
+                                    >
+                                        <div class="flex overflow-hidden flex-shrink-0 justify-center items-center w-14 h-14 bg-gray-100 rounded-lg">
+                                            <img
+                                                v-if="getSuggestionImage(product)"
+                                                :src="getSuggestionImage(product)"
+                                                :alt="product.title"
+                                                class="object-cover w-full h-full"
+                                            />
+                                            <i v-else class="fas fa-faucet text-2xl text-gray-300"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-sm font-semibold text-gray-800 truncate">{{ product.title }}</div>
+                                            <div class="flex flex-wrap gap-x-2 items-center mt-1 text-xs text-gray-500">
+                                                <span v-if="product.category?.title" class="truncate">{{ product.category.title }}</span>
+                                                <span v-if="product.article_id" class="truncate">Артикул: {{ product.article_id }}</span>
+                                            </div>
+                                            <div class="text-primary mt-1 text-sm font-semibold">
+                                                {{ formatCurrency(product.final_price ?? product.price ?? 0) }}
+                                            </div>
+                                        </div>
+                                        <i class="fas fa-chevron-right text-gray-300"></i>
+                                    </Link>
+                                </li>
+                            </ul>
+                            <div v-else class="p-4 text-sm" :class="searchError ? 'text-red-600' : 'text-gray-500'">
+                                {{ searchError || 'Ничего не найдено' }}
+                            </div>
+                        </template>
+                        <div v-if="hasSuggestions && !isSuggestionsLoading" class="px-4 py-3 bg-gray-50 border-t border-gray-100">
+                            <button
+                                type="button"
+                                class="bg-primary hover:bg-secondary active:bg-secondary px-4 py-2 w-full text-sm font-semibold text-white rounded-lg transition-colors"
+                                @click="handleSearch"
+                            >
+                                Смотреть все результаты
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="max-md:hidden flex items-center space-x-6">
                     <Link href="/favorites" class="relative">
-                    <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
-                        <i class="fas fa-heart mr-2 text-xl"></i>
-                        <span class="md:block hidden">Избранное</span>
-                        <span v-if="favoritesCount > 0" class="bg-primary flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full">
-                            {{ favoritesCount }}
-                        </span>
-                    </div>
+                        <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
+                            <i class="fas fa-heart mr-2 text-xl"></i>
+                            <span class="md:block hidden">Избранное</span>
+                            <span
+                                v-if="favoritesCount > 0"
+                                class="bg-primary flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
+                            >
+                                {{ favoritesCount }}
+                            </span>
+                        </div>
                     </Link>
 
                     <Link href="/cart" class="relative">
-                    <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
-                        <i class="fas fa-shopping-cart mr-2 text-xl"></i>
-                        <span class="md:block hidden">Корзина</span>
-                        <span v-if="cartCount > 0" class="bg-accent flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full">
-                            {{ cartCount }}
-                        </span>
-                    </div>
+                        <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
+                            <i class="fas fa-shopping-cart mr-2 text-xl"></i>
+                            <span class="md:block hidden">Корзина</span>
+                            <span
+                                v-if="cartCount > 0"
+                                class="bg-accent flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
+                            >
+                                {{ cartCount }}
+                            </span>
+                        </div>
                     </Link>
                 </div>
             </div>
@@ -159,5 +451,88 @@ watch(
                 </ul>
             </nav>
         </div>
+
+        <Transition
+            enter-active-class="transition-opacity duration-200"
+            leave-active-class="transition-opacity duration-200"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+        >
+            <div v-if="showMobileModal" class="fixed inset-0 z-[60] flex flex-col bg-black/40 backdrop-blur-sm">
+                <div class="mt-auto max-h-[85vh] overflow-hidden rounded-t-3xl bg-white shadow-xl">
+                    <div class="flex justify-between items-center px-4 py-3 border-b border-gray-100">
+                        <h2 class="text-base font-semibold text-gray-800">Поиск товаров</h2>
+                        <button
+                            type="button"
+                            class="hover:text-gray-600 p-2 text-gray-400 rounded-full transition"
+                            @click="closeMobileModal"
+                        >
+                            <i class="fas fa-times text-lg"></i>
+                        </button>
+                    </div>
+                    <div class="px-4 pt-4 pb-2">
+                        <form @submit.prevent="handleSearch" class="relative">
+                            <input
+                                ref="mobileSearchInput"
+                                v-model="searchQuery"
+                                type="search"
+                                placeholder="Введите запрос"
+                                class="focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary px-4 py-3 pl-12 w-full text-sm rounded-lg border border-gray-300"
+                                autocomplete="off"
+                            />
+                            <i class="fas fa-search absolute left-4 top-1/2 text-gray-400 -translate-y-1/2"></i>
+                        </form>
+                    </div>
+                    <div class="max-h-[55vh] overflow-y-auto px-4 pb-4">
+                        <div v-if="isSuggestionsLoading" class="py-6 text-sm text-center text-gray-500">Ищем товары…</div>
+                        <template v-else>
+                            <ul v-if="hasSuggestions" class="divide-y divide-gray-100">
+                                <li v-for="product in suggestions" :key="`mobile-${product.id}`" class="hover:bg-gray-50">
+                                    <Link
+                                        :href="`/products/${product.id}`"
+                                        class="flex gap-4 items-center px-2 py-3"
+                                        @click="handleSuggestionSelect"
+                                    >
+                                        <div class="flex overflow-hidden flex-shrink-0 justify-center items-center w-14 h-14 bg-gray-100 rounded-lg">
+                                            <img
+                                                v-if="getSuggestionImage(product)"
+                                                :src="getSuggestionImage(product)"
+                                                :alt="product.title"
+                                                class="object-cover w-full h-full"
+                                            />
+                                            <i v-else class="fas fa-faucet text-2xl text-gray-300"></i>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-sm font-semibold text-gray-800 truncate">{{ product.title }}</div>
+                                            <div class="flex flex-wrap gap-x-2 items-center mt-1 text-xs text-gray-500">
+                                                <span v-if="product.category?.title" class="truncate">{{ product.category.title }}</span>
+                                                <span v-if="product.article_id" class="truncate">Артикул: {{ product.article_id }}</span>
+                                            </div>
+                                            <div class="text-primary mt-1 text-sm font-semibold">
+                                                {{ formatCurrency(product.final_price ?? product.price ?? 0) }}
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </li>
+                            </ul>
+                            <div v-else class="py-6 text-sm text-center" :class="searchError ? 'text-red-600' : 'text-gray-500'">
+                                {{ searchError || 'Ничего не найдено' }}
+                            </div>
+                        </template>
+                    </div>
+                    <div v-if="hasSuggestions && !isSuggestionsLoading" class="px-4 py-3 border-t border-gray-100">
+                        <button
+                            type="button"
+                            class="bg-primary hover:bg-secondary active:bg-secondary px-4 py-3 w-full text-base font-semibold text-white rounded-xl transition-colors"
+                            @click="handleSearch"
+                        >
+                            Смотреть все результаты
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </Transition>
     </header>
 </template>
