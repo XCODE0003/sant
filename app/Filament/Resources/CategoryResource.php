@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-
+    protected static ?string $navigationLabel = 'Категории';
+    protected static ?string $modelLabel = 'категория';
+    protected static ?string $pluralModelLabel = 'категории';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Каталог';

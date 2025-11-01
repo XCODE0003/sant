@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 class ReviewResource extends Resource
 {
     protected static ?string $model = Review::class;
-
+    protected static ?string $navigationLabel = 'Отзывы';
+    protected static ?string $modelLabel = 'отзыв';
+    protected static ?string $pluralModelLabel = 'отзывы';
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-ellipsis';
 
     protected static ?string $navigationGroup = 'Каталог';

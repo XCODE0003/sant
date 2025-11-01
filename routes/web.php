@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderTrackingController;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Product;
@@ -336,14 +338,11 @@ Route::get('/disclaimer', function () {
 | Оформление заказа
 |--------------------------------------------------------------------------
 */
-Route::get('/checkout', function () {
-    return Inertia::render('Checkout');
-})->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
-Route::post('/checkout', function () {
-    // TODO: Обработка заказа
-    return redirect()->route('home')->with('success', 'Заказ успешно оформлен!');
-})->name('checkout.store');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+Route::get('/orders/{order:uuid}', OrderTrackingController::class)->name('orders.show');
 
 /*
 |--------------------------------------------------------------------------

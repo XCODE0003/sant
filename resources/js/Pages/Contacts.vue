@@ -37,25 +37,25 @@ const submitForm = () => {
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-5xl font-bold mb-6">Контакты</h1>
-                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Контакты</h1>
+                <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
                     Мы всегда готовы помочь вам с выбором сантехники и ответить на любые вопросы.
                     Свяжитесь с нами удобным для вас способом.
                 </p>
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-16 space-y-20">
+        <div class="container mx-auto px-4 py-10 md:py-16 space-y-12 md:space-y-20">
             <!-- Contact Info -->
             <section>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white rounded-2xl shadow-lg p-8 text-center hover:shadow-2xl transition-shadow">
-                        <div class="bg-primary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fas fa-phone text-3xl text-primary"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 text-center hover:shadow-2xl transition-shadow">
+                        <div class="bg-primary/10 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                            <i class="fas fa-phone text-2xl md:text-3xl text-primary"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Телефон</h3>
+                        <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Телефон</h3>
                         <div class="space-y-2">
                             <a href="tel:+79512353226" class="block text-lg font-semibold text-primary hover:underline">
                                 +7 (951) 235-32-26

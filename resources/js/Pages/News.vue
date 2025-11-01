@@ -61,37 +61,37 @@ const getTagStyle = (tag) => ({
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-5xl font-bold mb-6">Новости и акции</h1>
-                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Новости и акции</h1>
+                <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
                     Будьте в курсе последних новостей, специальных предложений и полезных материалов для вашего дома.
                 </p>
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-16">
-            <section class="mb-12">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="container mx-auto px-4 py-10 md:py-16">
+            <section class="mb-8 md:mb-12">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
                     <div>
-                        <h2 class="text-3xl font-bold text-gray-800">Свежие публикации</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Свежие публикации</h2>
                         <p class="text-gray-500">{{ hasNews ? 'Собрали для вас самое интересное.' : 'Новости пока не опубликованы.' }}</p>
                     </div>
                 </div>
             </section>
 
             <section>
-                <div v-if="hasNews" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div v-if="hasNews" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     <article
                         v-for="newsItem in newsItems"
                         :key="newsItem.id"
-                        class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+                        class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
                     >
-                        <div class="bg-gradient-to-br from-primary to-secondary h-44 flex items-center justify-center text-white">
-                            <i class="fas fa-newspaper text-5xl"></i>
+                        <div class="bg-gradient-to-br from-primary to-secondary h-36 md:h-44 flex items-center justify-center text-white">
+                            <i class="fas fa-newspaper text-4xl md:text-5xl"></i>
                         </div>
-                        <div class="p-6 flex flex-col h-full">
-                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                        <div class="p-4 md:p-6 flex flex-col h-full">
+                            <div class="flex items-center justify-between text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
                                 <span>
                                     <i class="fas fa-calendar-alt mr-1"></i>
                                     {{ formatDate(newsItem.published_at) }}
@@ -101,10 +101,10 @@ const getTagStyle = (tag) => ({
                                     {{ newsItem.views ?? 0 }}
                                 </span>
                             </div>
-                            <h3 class="text-xl font-semibold mb-3 text-gray-900">
+                            <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-900 line-clamp-2">
                                 {{ newsItem.title }}
                             </h3>
-                            <p class="text-gray-600 mb-6 line-clamp-4">
+                            <p class="text-gray-600 mb-4 md:mb-6 line-clamp-4 text-sm md:text-base">
                                 {{ newsItem.excerpt || (newsItem.content ? newsItem.content.slice(0, 180) + '…' : 'Детали новости появятся скоро.') }}
                             </p>
                             <div class="">

@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
-
+    protected static ?string $navigationLabel = 'Новости';
+    protected static ?string $modelLabel = 'новость';
+    protected static ?string $pluralModelLabel = 'новости';
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationGroup = 'Контент';
@@ -114,7 +116,7 @@ class NewsResource extends Resource
                                 $color = $tag['color'] ?? '#64748b';
 
                                 return sprintf(
-                                    '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold text-white" style="background-color:%s">%s</span>',
+                                    '<span class="inline-flex gap-1 items-center px-2 py-0.5 text-xs font-semibold text-white rounded-full" style="background-color:%s">%s</span>',
                                     $color,
                                     e($label)
                                 );

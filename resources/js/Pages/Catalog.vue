@@ -83,25 +83,25 @@ const isInCart = (product) => shopStore.isInCart(product.id);
     <AppLayout title="Каталог товаров - СантехникаЧелябинск">
         <Breadcrumbs :items="breadcrumbs" />
 
-        <div class="container mx-auto px-4 py-8">
-            <div class="flex flex-col lg:flex-row gap-8">
+        <div class="container mx-auto px-4 py-6 md:py-8">
+            <div class="flex flex-col lg:flex-row gap-6 md:gap-8">
                 <!-- Sidebar Filters -->
                 <aside class="lg:w-1/4">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
-                        <h3 class="text-xl font-semibold mb-6">Категории</h3>
-                        <div v-if="hasCategories" class="space-y-2">
+                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 lg:sticky lg:top-24">
+                        <h3 class="text-lg md:text-xl font-semibold mb-4 md:mb-6">Категории</h3>
+                        <div v-if="hasCategories" class="space-y-1.5 md:space-y-2">
                             <Link
                                 href="/catalog"
                                 preserve-scroll
                                 :class="[
-                                    'flex items-center justify-between px-3 py-2 rounded-lg transition-colors',
+                                    'flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-sm md:text-base touch-manipulation',
                                     activeCategorySlug === null
                                         ? 'bg-primary text-white'
-                                        : 'text-gray-700 hover:bg-gray-100',
+                                        : 'text-gray-700 hover:bg-gray-100 active:bg-gray-200',
                                 ]"
                             >
                                 <span>Все товары</span>
-                                <i class="fas fa-layer-group"></i>
+                                <i class="fas fa-layer-group text-sm"></i>
                             </Link>
                             <Link
                                 v-for="category in categories"
@@ -110,14 +110,14 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                 preserve-state
                                 preserve-scroll
                                 :class="[
-                                    'flex items-center justify-between px-3 py-2 rounded-lg transition-colors',
+                                    'flex items-center justify-between px-3 py-2 rounded-lg transition-colors text-sm md:text-base touch-manipulation',
                                     activeCategorySlug === category.slug
                                         ? 'bg-primary text-white'
-                                        : 'text-gray-700 hover:bg-gray-100',
+                                        : 'text-gray-700 hover:bg-gray-100 active:bg-gray-200',
                                 ]"
                             >
-                                <span>{{ category.title }}</span>
-                                <span class="text-sm opacity-80">{{ category.products_count ?? 0 }}</span>
+                                <span class="truncate mr-2">{{ category.title }}</span>
+                                <span class="text-xs md:text-sm opacity-80 flex-shrink-0">{{ category.products_count ?? 0 }}</span>
                             </Link>
                         </div>
                         <div v-else class="text-sm text-gray-500">
@@ -128,26 +128,26 @@ const isInCart = (product) => shopStore.isInCart(product.id);
 
                 <!-- Main Content -->
                 <section class="lg:w-3/4">
-                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                            <h3 class="text-lg font-semibold text-gray-800">
+                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-4 md:p-6 mb-4 md:mb-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 md:gap-4">
+                            <h3 class="text-base md:text-lg font-semibold text-gray-800">
                                 Найдено товаров: {{ meta.total ?? productItems.length }}
                             </h3>
-                            <div class="text-sm text-gray-500">
+                            <div class="text-xs md:text-sm text-gray-500">
                                 Страница {{ meta.current_page ?? 1 }} из {{ meta.last_page ?? 1 }}
                             </div>
                         </div>
                     </div>
 
-                    <div v-if="hasProducts" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <div v-if="hasProducts" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                         <article
                             v-for="product in productItems"
                             :key="product.id"
-                            class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+                            class="bg-white rounded-xl md:rounded-2xl shadow-lg hover:shadow-2xl active:shadow-xl transition-all duration-300 overflow-hidden group"
                         >
                             <Link :href="`/products/${product.id}`" class="block">
                                 <div class="relative">
-                                    <div class="h-60 bg-gray-100 flex items-center justify-center overflow-hidden">
+                                    <div class="h-44 sm:h-52 md:h-60 bg-gray-100 flex items-center justify-center overflow-hidden">
                                         <img
                                             v-if="getProductImage(product)"
                                             :src="getProductImage(product)"
@@ -158,56 +158,57 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                     </div>
                                     <span
                                         v-if="product.discount > 0"
-                                        class="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold"
+                                        class="absolute top-2 md:top-4 left-2 md:left-4 bg-red-500 text-white px-2 md:px-3 py-1 rounded-full text-xs md:text-sm font-semibold"
                                     >
                                         -{{ product.discount }}%
                                     </span>
                                 </div>
-                                <div class="p-6">
-                                    <h3 class="font-semibold text-lg mb-2 text-gray-900 group-hover:text-primary transition-colors">
+                                <div class="p-4 md:p-6">
+                                    <h3 class="font-semibold text-base md:text-lg mb-2 text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
                                         {{ product.title }}
                                     </h3>
-                                    <p v-if="product.category" class="text-sm text-gray-500 mb-3">
+                                    <p v-if="product.category" class="text-xs md:text-sm text-gray-500 mb-2 md:mb-3">
                                         {{ product.category.title }}
                                     </p>
-                                    <p v-if="product.description" class="text-sm text-gray-500 mb-4 line-clamp-2">
+                                    <p v-if="product.description" class="text-xs md:text-sm text-gray-500 mb-3 md:mb-4 line-clamp-2">
                                         <span v-html="product.description"></span>
 
                                     </p>
-                                    <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center justify-between mb-3 md:mb-4">
                                         <div>
-                                            <div class="text-2xl font-bold text-primary">
+                                            <div class="text-lg md:text-2xl font-bold text-primary">
                                                 {{ formatCurrency(product.final_price) }}
                                             </div>
-                                            <div v-if="product.discount > 0" class="text-sm text-gray-400 line-through">
+                                            <div v-if="product.discount > 0" class="text-xs md:text-sm text-gray-400 line-through">
                                                 {{ formatCurrency(product.price) }}
                                             </div>
                                         </div>
                                         <div v-if="product.rating_avg" class="flex items-center text-yellow-500">
-                                            <i class="fas fa-star mr-1"></i>
-                                            <span class="text-sm font-semibold">{{ product.rating_avg }}</span>
+                                            <i class="fas fa-star mr-1 text-xs md:text-sm"></i>
+                                            <span class="text-xs md:text-sm font-semibold">{{ product.rating_avg }}</span>
                                         </div>
                                     </div>
-                                    <div class="flex justify-between items-center text-sm text-gray-500">
+                                    <div class="flex justify-between items-center text-xs md:text-sm text-gray-500">
                                         <span>Отзывы: {{ product.reviews_count ?? 0 }}</span>
-                                        <span>ID: {{ product.article_id }}</span>
+                                        <span class="truncate ml-2">ID: {{ product.article_id }}</span>
                                     </div>
-                                    <div class="mt-4 flex items-center justify-between">
+                                    <div class="mt-3 md:mt-4 flex items-center justify-between gap-2">
                                         <button
                                             type="button"
-                                            class="px-3 py-2 rounded-lg text-sm font-semibold transition-colors"
+                                            class="flex-1 px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-colors touch-manipulation"
                                             :class="isInCart(product)
-                                                ? 'bg-green-500 hover:bg-green-600 text-white'
-                                                : 'bg-primary hover:bg-secondary text-white'"
+                                                ? 'bg-green-500 hover:bg-green-600 active:bg-green-700 text-white'
+                                                : 'bg-primary hover:bg-secondary active:bg-secondary text-white'"
                                             @click.prevent.stop="addProductToCart(product)"
                                         >
-                                            <i :class="[isInCart(product) ? 'fas fa-check' : 'fas fa-cart-plus', 'mr-2']"></i>
-                                            {{ isInCart(product) ? 'В корзине' : 'В корзину' }}
+                                            <i :class="[isInCart(product) ? 'fas fa-check' : 'fas fa-cart-plus', 'mr-1 md:mr-2']"></i>
+                                            <span class="hidden sm:inline">{{ isInCart(product) ? 'В корзине' : 'В корзину' }}</span>
+                                            <span class="sm:hidden">{{ isInCart(product) ? 'В корзине' : 'Купить' }}</span>
                                         </button>
                                         <button
                                             type="button"
-                                            class="text-lg transition-colors"
-                                            :class="isFavorite(product) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'"
+                                            class="text-base md:text-lg transition-colors p-2 touch-manipulation"
+                                            :class="isFavorite(product) ? 'text-red-500' : 'text-gray-400 hover:text-red-500 active:text-red-600'"
                                             @click.prevent.stop="toggleFavorite(product)"
                                         >
                                             <i :class="isFavorite(product) ? 'fas fa-heart' : 'far fa-heart'"></i>
@@ -222,19 +223,19 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                     </div>
 
                     <!-- Pagination -->
-                    <nav v-if="meta.last_page > 1" class="flex justify-center mt-10">
+                    <nav v-if="meta.last_page > 1" class="flex justify-center mt-8 md:mt-10">
                         <div class="inline-flex items-center gap-2">
                             <Link
                                 v-if="meta.prev_page_url"
                                 :href="makePageLink(meta.prev_page_url)"
                                 preserve-scroll
                                 preserve-state
-                                class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100"
+                                class="px-3 md:px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200 text-xs md:text-sm touch-manipulation"
                             >
-                                <i class="fas fa-chevron-left mr-2"></i>
-                                Назад
+                                <i class="fas fa-chevron-left mr-1 md:mr-2"></i>
+                                <span class="hidden sm:inline">Назад</span>
                             </Link>
-                            <span class="px-4 py-2 text-sm text-gray-500">
+                            <span class="px-3 md:px-4 py-2 text-xs md:text-sm text-gray-500">
                                 Страница {{ meta.current_page }} из {{ meta.last_page }}
                             </span>
                             <Link
@@ -242,10 +243,10 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                 :href="makePageLink(meta.next_page_url)"
                                 preserve-scroll
                                 preserve-state
-                                class="px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100"
+                                class="px-3 md:px-4 py-2 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-100 active:bg-gray-200 text-xs md:text-sm touch-manipulation"
                             >
-                                Вперёд
-                                <i class="fas fa-chevron-right ml-2"></i>
+                                <span class="hidden sm:inline">Вперёд</span>
+                                <i class="fas fa-chevron-right ml-1 md:ml-2"></i>
                             </Link>
                         </div>
                     </nav>

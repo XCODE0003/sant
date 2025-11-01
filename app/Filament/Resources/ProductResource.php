@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Support\Facades\Log;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -22,7 +23,9 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-cube';
-
+    protected static ?string $navigationLabel = 'Товары';
+    protected static ?string $modelLabel = 'товар';
+    protected static ?string $pluralModelLabel = 'товары';
     protected static ?string $navigationGroup = 'Каталог';
 
     public static function form(Form $form): Form
@@ -221,6 +224,16 @@ class ProductResource extends Resource
         $disk = Storage::disk('local');
         $fullPath = $disk->path($relativePath);
 
+        $logContext = [
+            'file' => $relativePath,
+            'rows_processed' => 0,
+            'categories_created' => 0,
+            'products_created' => 0,
+            'products_updated' => 0,
+            'skipped_rows' => [],
+            'price_skipped' => [],
+        ];
+
         try {
             if (! $disk->exists($relativePath)) {
                 throw new \RuntimeException('Файл не найден. Загрузите его повторно.');
@@ -241,10 +254,16 @@ class ProductResource extends Resource
                     continue;
                 }
 
-                $code = trim((string) ($row['A'] ?? ''));
-                $name = trim((string) ($row['B'] ?? ''));
+                $logContext['rows_processed']++;
+
+                $code = static::convertEncoding(trim((string) ($row['A'] ?? '')));
+                $name = static::convertEncoding(trim((string) ($row['B'] ?? '')));
 
                 if ($code === '' && $name === '') {
+                    $logContext['skipped_rows'][] = [
+                        'row' => $index,
+                        'reason' => 'empty_code_and_name',
+                    ];
                     continue;
                 }
 
@@ -257,10 +276,17 @@ class ProductResource extends Resource
 
                 if ($isCategoryRow) {
                     $currentCategory = static::findOrCreateCategory($code, $name, $createdCategories);
+                    $logContext['categories_created'] = $createdCategories;
                     continue;
                 }
 
                 if (! $currentCategory || $code === '' || $name === '') {
+                    $logContext['skipped_rows'][] = [
+                        'row' => $index,
+                        'code' => $code,
+                        'name' => $name,
+                        'reason' => 'missing_category_or_identifiers',
+                    ];
                     continue;
                 }
 
@@ -271,34 +297,42 @@ class ProductResource extends Resource
                     $product->title = $name;
                     $product->slug = static::generateUniqueSlug($name, $code, Product::class);
                     $product->description = $product->description ?? '';
-                    $product->is_active = true;
+                    $product->category_id = $currentCategory->id;
+                } elseif (! $product->category_id) {
+                    $product->category_id = $currentCategory->id;
                 }
 
-                $product->category_id = $currentCategory->id;
-
-                if ($retailPrice !== null) {
+                if ($retailPrice !== null && $retailPrice > 0) {
                     $product->price = $retailPrice;
+                } elseif ($retailPrice !== null) {
+                    $logContext['price_skipped'][] = [
+                        'row' => $index,
+                        'article' => $code,
+                        'name' => $name,
+                        'value' => $retailPrice,
+                    ];
                 }
 
                 $characteristics = $product->characteristics ?? [];
 
-                if ($stock !== null) {
-                    $characteristics['stock'] = $stock;
-                }
-
-                if ($purchasePrice !== null) {
-                    $characteristics['purchase_price'] = $purchasePrice;
-                }
-
-                if ($warehouseValue !== null) {
-                    $characteristics['warehouse_value'] = $warehouseValue;
-                }
+                // $characteristics['stock'] = $stock ?? 0;
+                // $characteristics['purchase_price'] = $purchasePrice ?? null;
+                // $characteristics['warehouse_value'] = $warehouseValue ?? null;
 
                 $product->characteristics = $characteristics;
                 $product->save();
 
-                $exists ? $updatedProducts++ : $createdProducts++;
+                if ($exists) {
+                    $updatedProducts++;
+                } else {
+                    $createdProducts++;
+                }
             }
+
+            $logContext['products_created'] = $createdProducts;
+            $logContext['products_updated'] = $updatedProducts;
+
+            Log::info('XLS import completed', $logContext);
 
             Notification::make()
                 ->title('Импорт завершён')
@@ -306,6 +340,12 @@ class ProductResource extends Resource
                 ->success()
                 ->send();
         } catch (Throwable $exception) {
+            Log::error('XLS import failed', [
+                'exception' => $exception->getMessage(),
+                'trace' => $exception->getTraceAsString(),
+                'context' => $logContext,
+            ]);
+
             Notification::make()
                 ->title('Импорт не выполнен')
                 ->body($exception->getMessage())
@@ -375,5 +415,40 @@ class ProductResource extends Resource
         }
 
         return $slug;
+    }
+
+    protected static function convertEncoding(?string $value): string
+    {
+        if ($value === null || $value === '') {
+            return '';
+        }
+
+        $value = trim($value);
+
+        if (mb_check_encoding($value, 'UTF-8') && preg_match('/[А-Яа-яЁё]/u', $value)) {
+            return $value;
+        }
+
+        $result = @iconv('Windows-1252', 'UTF-8//IGNORE', $value);
+        if ($result !== false && mb_check_encoding($result, 'UTF-8') && preg_match('/[А-Яа-яЁё]/u', $result)) {
+            return trim($result);
+        }
+
+        $value = preg_replace_callback('/[\x80-\xFF]+/', function ($matches) {
+            $chunk = $matches[0];
+            $utf8 = @iconv('Windows-1251', 'UTF-8//IGNORE', $chunk);
+            return $utf8 !== false ? $utf8 : $chunk;
+        }, $value);
+
+        if (mb_check_encoding($value, 'UTF-8') && preg_match('/[А-Яа-яЁё]/u', $value)) {
+            return trim($value);
+        }
+
+        $result = @iconv('ISO-8859-1', 'UTF-8//IGNORE', $value);
+        if ($result !== false && mb_check_encoding($result, 'UTF-8') && preg_match('/[А-Яа-яЁё]/u', $result)) {
+            return trim($result);
+        }
+
+        return $value;
     }
 }

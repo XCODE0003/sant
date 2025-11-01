@@ -20,25 +20,25 @@ const toggleFaq = (number) => {
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-16">
+        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-5xl font-bold mb-6">Оплата и доставка</h1>
-                <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Оплата и доставка</h1>
+                <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
                     Удобные способы оплаты и быстрая доставка по всей России.
                     Мы заботимся о том, чтобы получение вашего заказа было максимально комфортным.
                 </p>
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-16">
+        <div class="container mx-auto px-4 py-10 md:py-16">
             <!-- Quick Info -->
-            <section class="mb-20">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
-                        <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <i class="fas fa-truck text-3xl text-green-600"></i>
+            <section class="mb-12 md:mb-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 text-center">
+                        <div class="bg-green-100 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
+                            <i class="fas fa-truck text-2xl md:text-3xl text-green-600"></i>
                         </div>
-                        <h3 class="text-xl font-semibold mb-3">Быстрая доставка</h3>
+                        <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">Быстрая доставка</h3>
                         <p class="text-gray-600 mb-4">От 1 дня по Москве, 3-7 дней по России</p>
                         <div class="text-2xl font-bold text-primary">Бесплатно от 5 000 ₽</div>
                     </div>

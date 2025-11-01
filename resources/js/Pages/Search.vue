@@ -82,10 +82,10 @@ const getTagStyle = (tag) => ({
     <AppLayout :title="query ? `Поиск: ${query}` : 'Поиск'">
         <Breadcrumbs :items="breadcrumbs" />
 
-        <div class="container mx-auto px-4 py-12">
-            <div class="mb-10">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">Результаты поиска</h1>
-                <p class="text-gray-500">
+        <div class="container mx-auto px-4 py-6 md:py-12">
+            <div class="mb-6 md:mb-10">
+                <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Результаты поиска</h1>
+                <p class="text-gray-500 text-sm md:text-base">
                     {{ query ? `По запросу «${query}» найдено ${products.length} товаров и ${news.length} новостей.` : 'Введите запрос в поле поиска наверху.' }}
                 </p>
             </div>
@@ -95,15 +95,15 @@ const getTagStyle = (tag) => ({
             </div>
 
             <div v-else>
-                <div v-if="hasProducts" class="mb-16">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-2xl font-semibold text-gray-800">Товары</h2>
+                <div v-if="hasProducts" class="mb-10 md:mb-16">
+                    <div class="flex items-center justify-between mb-4 md:mb-6">
+                        <h2 class="text-xl md:text-2xl font-semibold text-gray-800">Товары</h2>
                         <Link href="/catalog" class="text-sm text-primary hover:underline">
                             Перейти в каталог
                         </Link>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                         <article
                             v-for="product in products"
                             :key="product.id"

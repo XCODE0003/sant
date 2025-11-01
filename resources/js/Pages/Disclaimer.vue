@@ -5,23 +5,23 @@ import { Link } from '@inertiajs/vue3';
 
 <template>
     <AppLayout title="Правовая информация - СантехникаЧелябинск">
-        <div class="container mx-auto px-4 py-16">
+        <div class="container mx-auto px-4 py-10 md:py-16">
             <div class="max-w-4xl mx-auto">
                 <!-- Title -->
-                <div class="text-center mb-12">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Правовая информация</h1>
-                    <p class="text-xl text-gray-600">Важная информация для покупателей</p>
+                <div class="text-center mb-8 md:mb-12">
+                    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Правовая информация</h1>
+                    <p class="text-sm md:text-lg lg:text-xl text-gray-600">Важная информация для покупателей</p>
                 </div>
 
                 <!-- Main Content -->
-                <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
-                    <div class="flex items-start mb-6">
-                        <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                            <i class="fas fa-exclamation-triangle text-2xl text-yellow-600"></i>
+                <div class="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 mb-6 md:mb-8">
+                    <div class="flex items-start mb-4 md:mb-6">
+                        <div class="bg-yellow-100 p-2 md:p-3 rounded-full mr-3 md:mr-4 flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-xl md:text-2xl text-yellow-600"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Информация о ценах</h2>
-                            <p class="text-lg text-gray-700 leading-relaxed">
+                            <h2 class="text-xl md:text-2xl font-semibold text-gray-800 mb-3 md:mb-4">Информация о ценах</h2>
+                            <p class="text-sm md:text-base lg:text-lg text-gray-700 leading-relaxed">
                                 Вся информация, размещенная на данном сайте, включая цены на товары и услуги,
                                 носит исключительно информационный характер и <strong>не является публичной офертой</strong>,
                                 определяемой положениями статьи 437 Гражданского кодекса Российской Федерации.
