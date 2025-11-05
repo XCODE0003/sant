@@ -5,6 +5,16 @@ import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+    css: {
+        lightningcss: {
+            targets: {
+                chrome: 90,
+                firefox: 100,
+                safari: 15,
+                edge: 100,
+            },
+        },
+    },
     plugins: [
         laravel({
             input: ['resources/js/app.js'],
