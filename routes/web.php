@@ -194,13 +194,33 @@ Route::get('/', function (Request $request) use ($mapProduct, $mapCategory, $map
 |--------------------------------------------------------------------------
 */
 Route::get('/catalog', function (Request $request) use ($mapProduct, $mapCategory) {
-    $products = Product::query()
+    $categorySlug = trim((string) $request->query('category', ''));
+
+    $productsQuery = Product::query()
+        ->active()
         ->with('category')
-        ->withAvg('reviews', 'rating')
+        ->withAvg('reviews', 'rating');
+
+    if ($categorySlug !== '') {
+        $selectedCategory = Category::query()->where('slug', $categorySlug)->first();
+
+        if ($selectedCategory) {
+            $productsQuery->where('category_id', $selectedCategory->id);
+        } else {
+            $productsQuery->whereRaw('0 = 1');
+        }
+    }
+
+    $products = $productsQuery
+        ->orderByDesc('updated_at')
         ->paginate(12)
         ->withQueryString();
 
-    $categories = Category::query()->active()->orderBy('title')->get();
+    $categories = Category::query()
+        ->active()
+        ->withCount('products')
+        ->orderBy('title')
+        ->get();
 
     $productsData = collect($products->items())
         ->map($mapProduct)
