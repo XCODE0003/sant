@@ -15,5 +15,32 @@
     border-color: #e5e7eb;
 }
 
+/* Legacy browser compatibility fixes */
+@supports not (aspect-ratio: 1) {
+    .aspect-square {
+        position: relative;
+        padding-bottom: 100%;
+    }
+    .aspect-square > * {
+        position: absolute;
+        inset: 0;
+    }
+}
+
+/* Ensure backdrop-filter fallback */
+@supports not (backdrop-filter: blur(10px)) {
+    .backdrop-blur-sm {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Grid fallback for older browsers */
+@supports not (display: grid) {
+    .grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

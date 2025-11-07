@@ -15,7 +15,7 @@ defineProps({
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center mb-6">
-                        <div class="bg-gradient-to-r from-primary to-secondary text-white p-3 rounded-lg mr-4">
+                        <div class="bg-primary text-white p-3 rounded-lg mr-4">
                             <i class="fas fa-wrench text-2xl"></i>
                         </div>
                         <div>

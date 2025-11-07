@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
             <!-- Main header -->
             <div class="max-md:flex-col max-md:gap-5 flex justify-between items-center py-4">
                 <Link href="/" class="hover:opacity-80 flex items-center transition-opacity">
-                    <div class="from-primary to-secondary p-3 mr-4 text-white bg-gradient-to-r rounded-lg">
+                    <div class="bg-primary p-3 mr-4 text-white rounded-lg">
                         <i class="fas fa-wrench text-2xl"></i>
                     </div>
                     <div>

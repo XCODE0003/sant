@@ -14,7 +14,7 @@ const breadcrumbs = [
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">О компании СантехникаЧелябинск</h1>
                 <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
@@ -117,7 +117,7 @@ const breadcrumbs = [
 
             <!-- Contact CTA -->
             <section class="text-center">
-                <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-12 text-white">
+                <div class="bg-primary rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-12 text-white">
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Готовы начать сотрудничество?</h2>
                     <p class="text-sm md:text-lg lg:text-xl text-blue-100 mb-6 md:mb-8 max-w-2xl mx-auto">
                         Свяжитесь с нами сегодня, и мы поможем вам найти идеальные решения для вашего проекта

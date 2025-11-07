@@ -39,7 +39,7 @@ const clearCart = () => {
 
 <template>
     <AppLayout title="Корзина - СантехникаЧелябинск">
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4">
                 <h1 class="text-2xl md:text-4xl font-bold">Корзина</h1>
                 <p class="mt-2 text-sm md:text-base text-blue-100">{{ cartCount }} товар(ов) в корзине</p>

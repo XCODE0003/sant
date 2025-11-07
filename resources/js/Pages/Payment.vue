@@ -20,7 +20,7 @@ const toggleFaq = (number) => {
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Оплата и доставка</h1>
                 <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">

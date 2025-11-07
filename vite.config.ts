@@ -8,12 +8,20 @@ export default defineConfig({
     css: {
         lightningcss: {
             targets: {
-                chrome: 90,
-                firefox: 100,
-                safari: 15,
-                edge: 100,
+                chrome: 80,
+                firefox: 90,
+                safari: 13,
+                edge: 90,
+            },
+            cssModules: false,
+            drafts: {
+                customMedia: false,
             },
         },
+    },
+    build: {
+        target: ['es2020', 'chrome80', 'firefox90', 'safari13', 'edge90'],
+        cssTarget: ['chrome80', 'firefox90', 'safari13', 'edge90'],
     },
     plugins: [
         laravel({

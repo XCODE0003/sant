@@ -193,7 +193,7 @@ const getTagStyle = (tag) => ({
                             :key="newsItem.id"
                             class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
                         >
-                            <div class="bg-gradient-to-br from-primary to-secondary h-44 flex items-center justify-center text-white">
+                            <div class="bg-primary h-44 flex items-center justify-center text-white">
                                 <i class="fas fa-newspaper text-4xl"></i>
                             </div>
                             <div class="p-6 flex flex-col h-full">

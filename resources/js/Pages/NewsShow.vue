@@ -43,7 +43,7 @@ const getTagStyle = (tag) => ({
     <AppLayout :title="`${news.title} - Новости`">
         <Breadcrumbs :items="breadcrumbs" />
 
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4">
                 <h1 class="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight mb-3 md:mb-4">{{ news.title }}</h1>
                 <div class="flex flex-wrap items-center gap-3 md:gap-4 text-blue-100 text-xs md:text-sm">

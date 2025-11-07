@@ -1,0 +1,29 @@
+# Browsers that we support
+
+# Chrome
+Chrome >= 80
+
+# Firefox
+Firefox >= 90
+
+# Safari
+Safari >= 13
+
+# Edge
+Edge >= 90
+
+# iOS Safari
+iOS >= 13
+
+# Samsung Internet
+Samsung >= 12
+
+# Android
+Android >= 80
+
+# Opera
+Opera >= 70
+
+# Not dead browsers
+not dead
+

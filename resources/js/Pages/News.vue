@@ -61,7 +61,7 @@ const getTagStyle = (tag) => ({
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Новости и акции</h1>
                 <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
@@ -87,7 +87,7 @@ const getTagStyle = (tag) => ({
                         :key="newsItem.id"
                         class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
                     >
-                        <div class="bg-gradient-to-br from-primary to-secondary h-36 md:h-44 flex items-center justify-center text-white">
+                        <div class="bg-primary h-36 md:h-44 flex items-center justify-center text-white">
                             <i class="fas fa-newspaper text-4xl md:text-5xl"></i>
                         </div>
                         <div class="p-4 md:p-6 flex flex-col h-full">

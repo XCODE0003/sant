@@ -111,7 +111,7 @@ import { Link } from '@inertiajs/vue3';
 
                 <!-- CTA -->
                 <div class="text-center mt-12">
-                    <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-white">
+                    <div class="bg-primary rounded-2xl p-8 text-white">
                         <h3 class="text-2xl font-bold mb-4">Есть вопросы?</h3>
                         <p class="text-blue-100 mb-6">
                             Наши специалисты готовы предоставить всю необходимую информацию

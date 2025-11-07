@@ -55,7 +55,7 @@ const services = [
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-gradient-to-r from-primary to-secondary text-white py-10 md:py-16">
+        <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
                 <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Наши услуги</h1>
                 <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
@@ -79,10 +79,7 @@ const services = [
                         :key="service.title"
                         class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group"
                     >
-                        <div
-                            class="p-6 md:p-8 text-white text-center bg-gradient-to-br"
-                            :class="service.color"
-                        >
+                        <div class="p-6 md:p-8 text-white text-center bg-primary">
                             <i :class="`fas ${service.icon} text-4xl md:text-5xl mb-3 md:mb-4`"></i>
                             <h3 class="text-xl md:text-2xl font-semibold">{{ service.title }}</h3>
                         </div>
@@ -165,7 +162,7 @@ const services = [
 
             <!-- CTA -->
             <section class="text-center">
-                <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-12 text-white">
+                <div class="bg-primary rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-12 text-white">
                     <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Нужна помощь с сантехникой?</h2>
                     <p class="text-sm md:text-lg lg:text-xl text-blue-100 mb-6 md:mb-8 max-w-2xl mx-auto">
                         Оставьте заявку, и наш мастер свяжется с вами в течение 15 минут для уточнения деталей
