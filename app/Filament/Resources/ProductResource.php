@@ -106,6 +106,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultPaginationPageOption(25)
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->label('Название')
