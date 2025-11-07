@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Increase memory limit for admin operations
+        if (request()->is('admin/*') || request()->is('livewire/*')) {
+            @ini_set('memory_limit', '512M');
+            @ini_set('max_execution_time', '300');
+        }
     }
 }
