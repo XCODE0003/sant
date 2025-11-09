@@ -113,7 +113,7 @@ const submitOrder = () => {
 </script>
 
 <template>
-    <AppLayout title="Оформление заказа - СантехникаЧелябинск">
+    <AppLayout title="Оформление заказа - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <div v-if="flash.success" class="bg-green-50 border-b border-green-200">

@@ -19,8 +19,8 @@ defineProps({
                             <i class="fas fa-wrench text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold">СантехникаЧелябинск</h3>
-                            <p class="text-gray-400">ВОДА и ТЕПЛО в вашем доме</p>
+                            <h3 class="text-2xl font-bold">АкватЭрия</h3>
+                            <p class="text-gray-400">Территория воды и тепла</p>
                         </div>
                     </div>
                     <p class="text-gray-400 mb-6">
@@ -94,8 +94,8 @@ defineProps({
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-envelope text-primary mr-3"></i>
-                            <a href="mailto:info@santehchel.ru" class="text-gray-400 hover:text-white transition-colors">
-                                info@santehchel.ru
+                            <a href="mailto:qwer-75@mail.ru" class="text-gray-400 hover:text-white transition-colors">
+                                qwer-75@mail.ru
                             </a>
                         </div>
                         <div class="flex items-center">
@@ -108,7 +108,7 @@ defineProps({
 
             <div class="border-t border-gray-800 mt-12 pt-8">
                 <div class="text-center mb-4">
-                    <p class="text-gray-400">&copy; 2024 СантехникаЧелябинск. Все права защищены.</p>
+                    <p class="text-gray-400">&copy; 2024 АкватЭрия. Все права защищены.</p>
                 </div>
                 <div class="text-center text-sm text-gray-500">
                     <p class="mb-2">

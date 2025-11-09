@@ -10,13 +10,13 @@ const breadcrumbs = [
 </script>
 
 <template>
-    <AppLayout title="О нас - СантехникаЧелябинск">
+    <AppLayout title="О нас - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
         <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">О компании СантехникаЧелябинск</h1>
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">О компании АкватЭрия</h1>
                 <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
                     Мы — ведущий поставщик качественной сантехники в России с 15-летним опытом работы.
                     Наша миссия — делать ваш дом комфортным и современным.
@@ -32,7 +32,7 @@ const breadcrumbs = [
                         <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-4 md:mb-6">Наша история</h2>
                         <div class="prose text-gray-600 space-y-3 md:space-y-4">
                             <p class="text-sm md:text-base lg:text-lg leading-relaxed">
-                                Компания СантехникаЧелябинск была основана в 2009 году с простой идеей — предоставить клиентам
+                                Компания АкватЭрия была основана в 2009 году с простой идеей — предоставить клиентам
                                 доступ к качественной сантехнике по справедливым ценам. За 15 лет работы мы выросли
                                 из небольшого магазина в одного из крупнейших поставщиков сантехнического оборудования в России.
                             </p>

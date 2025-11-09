@@ -33,7 +33,7 @@ const submitForm = () => {
 </script>
 
 <template>
-    <AppLayout title="Контакты - СантехникаЧелябинск">
+    <AppLayout title="Контакты - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
@@ -70,8 +70,8 @@ const submitForm = () => {
                         </div>
                         <h3 class="text-xl font-semibold mb-4">Email</h3>
                         <div class="space-y-2">
-                            <a href="mailto:info@santehchel.ru" class="block text-lg font-semibold text-primary hover:underline">
-                                info@santehchel.ru
+                            <a href="mailto:qwer-75@mail.ru" class="block text-lg font-semibold text-primary hover:underline">
+                                qwer-75@mail.ru
                             </a>
                         </div>
                         <p class="text-sm text-gray-500 mt-4">Ответим в течение часа</p>

@@ -54,25 +54,19 @@ const isInCart = (product) => shopStore.isInCart(product.id);
 </script>
 
 <template>
-    <AppLayout title="СантехникаЧелябинск - ВОДА и ТЕПЛО в вашем доме">
+    <AppLayout title="АкватЭрия - Территория воды и тепла">
         <!-- Hero Section -->
         <section class="bg-primary md:py-16 lg:py-20 py-10 text-white">
             <div class="container px-4 mx-auto">
                 <div class="md:grid-cols-2 md:gap-12 grid gap-8 items-center">
+
                     <div>
-                        <h2 class="sm:text-3xl md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold leading-tight">
-                            ВОДА и ТЕПЛО в вашем доме начинается с нас
-                        </h2>
-                        <p class="sm:text-base md:text-lg lg:text-xl md:mb-8 mb-6 text-sm text-blue-100">
-                            С 2001 года мы продаем качественное санитарно-техническое оборудование,
-                            комплектующие и запчасти для ремонта. Профессионализм и надежность.
-                        </p>
-                        <div class="sm:flex-row md:gap-4 flex flex-col gap-3">
+                        <div class="sm:flex-row mb-5 md:gap-4 flex flex-col gap-3">
                             <Link
                                 href="/catalog"
-                                class="bg-accent hover:bg-yellow-500 active:bg-yellow-600 md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white rounded-lg transition-colors"
+                                class="bg-accent text-yellow !text-2xl active:bg-yellow-600 md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 font-semibold text-white rounded-lg transition-colors"
                             >
-                                <i class="fas fa-shopping-bag mr-2"></i>
+                                <i class="fas fa-shopping-bag mr-2 "></i>
                                 Каталог товаров
                             </Link>
                             <Link
@@ -83,6 +77,14 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                 Наши услуги
                             </Link>
                         </div>
+                        <h2 class="sm:text-3xl md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold leading-tight">
+                            Территория воды и тепла начинается с нас
+                        </h2>
+                        <p class="sm:text-base md:text-lg lg:text-xl md:mb-8 mb-6 text-sm text-blue-100">
+                            С 2001 года мы продаем качественное санитарно-техническое оборудование,
+                            комплектующие и запчасти для ремонта. Профессионализм и надежность.
+                        </p>
+
                     </div>
                     <div class="md:block hidden relative">
                         <div class="bg-white/10 md:p-8 p-6 rounded-2xl backdrop-blur-sm">

@@ -80,7 +80,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
 </script>
 
 <template>
-    <AppLayout title="Каталог товаров - СантехникаЧелябинск">
+    <AppLayout title="Каталог товаров - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <div class="container mx-auto px-4 py-6 md:py-8">

@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <AppLayout title="Правовая информация - СантехникаЧелябинск">
+    <AppLayout title="Правовая информация - АкватЭрия">
         <div class="container mx-auto px-4 py-10 md:py-16">
             <div class="max-w-4xl mx-auto">
                 <!-- Title -->
@@ -72,8 +72,8 @@ import { Link } from '@inertiajs/vue3';
                                     <i class="fas fa-envelope text-primary mr-3"></i>
                                     <span class="font-semibold">Email</span>
                                 </div>
-                                <a href="mailto:info@santehchel.ru" class="text-primary hover:underline">
-                                    info@santehchel.ru
+                                <a href="mailto:qwer-75@mail.ru" class="text-primary hover:underline">
+                                    qwer-75@mail.ru
                                 </a>
                             </div>
                         </div>

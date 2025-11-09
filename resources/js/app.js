@@ -8,7 +8,7 @@ import { createPinia } from 'pinia';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
-    title: (title) => (title ? `${title}` : 'СантехникаЧелябинск - ВОДА и ТЕПЛО в вашем доме'),
+    title: (title) => (title ? `${title}` : 'АкватЭрия - Территория воды и тепла'),
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,

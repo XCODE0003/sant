@@ -8,7 +8,7 @@ import { useShopStore } from '@/stores/useShopStore';
 defineProps({
     title: {
         type: String,
-        default: 'СантехникаЧелябинск',
+        default: 'АкватЭрия',
     },
 });
 

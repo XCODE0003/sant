@@ -57,7 +57,7 @@ const getTagStyle = (tag) => ({
 </script>
 
 <template>
-    <AppLayout title="Новости и акции - СантехникаЧелябинск">
+    <AppLayout title="Новости и акции - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->

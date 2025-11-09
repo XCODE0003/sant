@@ -263,8 +263,16 @@ onBeforeUnmount(() => {
                     </div>
                     <div class="max-md:hidden flex items-center">
                         <i class="fas fa-envelope text-primary mr-2"></i>
-                        <a href="mailto:info@santehchel.ru" class="hover:text-primary">info@santehchel.ru</a>
+                        <a href="mailto:qwer-75@mail.ru" class="hover:text-primary">qwer-75@mail.ru</a>
                     </div>
+                 <div class="max-md:hidden flex items-center">
+                     <i class="fas fa-user-tie text-primary mr-2" aria-hidden="true"></i>
+                     <span class="hover:text-primary">ИП Нурисламова Наталья Владимировна</span>
+                 </div>
+                 <div class="max-md:hidden flex items-center">
+                     <i class="fas fa-id-card text-primary mr-2" aria-hidden="true"></i>
+                     <span class="hover:text-primary">ИНН 744808080440</span>
+                 </div>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="flex items-center">
@@ -281,8 +289,10 @@ onBeforeUnmount(() => {
                         <i class="fas fa-wrench text-2xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">СантехникаЧелябинск</h1>
-                        <p class="text-sm text-gray-600">ВОДА и ТЕПЛО в вашем доме</p>
+                        <div class="p-0.5 rounded-xl px-1 bg-accent w-fit">
+                            <h1 class="text-2xl font-bold text-[#f1e811]">Акват<span class="text-primary">Э</span>рия</h1>
+                        </div>
+                        <p class="text-sm text-gray-600">Территория воды и тепла</p>
                     </div>
                 </Link>
 
@@ -410,12 +420,12 @@ onBeforeUnmount(() => {
                     </Link>
 
                     <Link href="/cart" class="relative">
-                        <div class="hover:text-primary flex items-center text-gray-600 transition-colors cursor-pointer">
+                        <div class="btn p-2 rounded-xl bg-accent px-10 text-yellow flex items-center  transition-colors cursor-pointer">
                             <i class="fas fa-shopping-cart mr-2 text-xl"></i>
                             <span class="md:block hidden">Корзина</span>
                             <span
                                 v-if="cartCount > 0"
-                                class="bg-accent flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
+                                class="bg-yellow flex absolute -top-2 -right-2 justify-center items-center w-5 h-5 text-xs text-white rounded-full"
                             >
                                 {{ cartCount }}
                             </span>

@@ -149,7 +149,7 @@ const deliveryAddress = computed(() => {
 </script>
 
 <template>
-    <AppLayout :title="`Заказ ${order.number ?? ''} - СантехникаЧелябинск`">
+    <AppLayout :title="`Заказ ${order.number ?? ''} - АкватЭрия`">
         <Breadcrumbs :items="breadcrumbs" />
 
         <div v-if="flash.success" class="bg-green-50 border-b border-green-200">

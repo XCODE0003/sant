@@ -51,7 +51,7 @@ const services = [
 </script>
 
 <template>
-    <AppLayout title="Услуги - СантехникаЧелябинск">
+    <AppLayout title="Услуги - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->

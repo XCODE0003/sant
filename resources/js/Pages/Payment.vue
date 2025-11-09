@@ -16,7 +16,7 @@ const toggleFaq = (number) => {
 </script>
 
 <template>
-    <AppLayout title="Оплата и доставка - СантехникаЧелябинск">
+    <AppLayout title="Оплата и доставка - АкватЭрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
