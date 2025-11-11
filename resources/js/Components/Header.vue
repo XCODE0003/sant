@@ -279,6 +279,10 @@ onBeforeUnmount(() => {
                         <i class="fas fa-clock text-primary mr-2"></i>
                         Пн-Пт: 8:30-18:00
                     </span>
+                    <span class="flex items-center">
+                        <i class="fas fa-map-marker-alt text-primary mr-2"></i>
+                        Розничный магазин: г.Челябинск, Ул.Работниц 89/1 павильон 3306 строительный комплекс Перекресток
+                    </span>
                 </div>
             </div>
 

@@ -78,7 +78,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                             </Link>
                         </div>
                         <h2 class="sm:text-3xl md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold leading-tight">
-                            Территория воды и тепла начинается с нас
+                            ВОДА и ТЕПЛО в Вашем доме начинаются с нас
                         </h2>
                         <p class="sm:text-base md:text-lg lg:text-xl md:mb-8 mb-6 text-sm text-blue-100">
                             С 2001 года мы продаем качественное санитарно-техническое оборудование,
