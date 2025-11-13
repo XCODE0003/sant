@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('article_id')->unique();
-            $table->integer('category_id');
+            $table->foreignId('category_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->decimal('price', 10, 2);
             $table->unsignedTinyInteger('discount')->default(0);
             $table->json('characteristics')->nullable();

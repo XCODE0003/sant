@@ -40,8 +40,9 @@ const toggleFaq = (number) => {
                             <i class="fas fa-truck text-2xl md:text-3xl text-green-600"></i>
                         </div>
                         <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3">Быстрая доставка</h3>
-                        <p class="text-gray-600 mb-4">на следующий день по Челябинску, 3-7 дней по России</p>
-                        <div class="text-2xl font-bold text-primary">Бесплатно по Челябинску от 20000руб</div>
+                        <p class="text-gray-600 mb-4">На следующий день по Челябинску, 3-7 дней по России</p>
+                        <div class="text-2xl font-bold text-primary">От 1000руб</div>
+                        <div class="text-sm text-gray-400">*Бесплатно по Челябинску от 20000руб</div>
                     </div>
 
                     <div class="bg-white rounded-2xl shadow-lg p-8 text-center">
@@ -95,7 +96,7 @@ const toggleFaq = (number) => {
                             <!-- Доставка по Челябинску -->
                             <div>
                                 <h4 class="text-2xl font-semibold mb-4">Доставка по г. Челябинску:</h4>
-                                
+
                                 <div class="mb-6">
                                     <h5 class="text-xl font-semibold mb-3">Собственной курьерской службой</h5>
                                     <div class="flex items-start text-gray-600">
@@ -125,7 +126,7 @@ const toggleFaq = (number) => {
                                         <li class="flex items-start">
                                             <i class="fas fa-info-circle text-yellow-400 mr-3 mt-1"></i>
                                             <span>
-                                                Стоимость рассчитывается индивидуально, по предварительному звонку по номеру <a href="tel:+79512353226" class="text-primary underline">+7 9512353226</a>
+                                                Стоимость рассчитывается индивидуально, по предварительному звонку по номеру <a href="tel:+79512353226" class="text-primary underline">+7 (951) 235-32-26</a>
                                             </span>
                                         </li>
                                     </ul>

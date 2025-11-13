@@ -35,6 +35,8 @@
     }
 }
 
+
+
 /* Grid fallback for older browsers */
 @supports not (display: grid) {
     .grid {

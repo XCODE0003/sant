@@ -180,8 +180,31 @@ class ProductResource extends Resource
                             ->visibility('private')
                             ->preserveFilenames()
                             ->required(),
+                        Forms\Components\Checkbox::make('update_prices')
+                            ->label('Обновлять цены существующих товаров')
+                            ->default(true)
+                            ->helperText('Если отключить, цены существующих товаров останутся без изменений.'),
+                        Forms\Components\Checkbox::make('add_products')
+                            ->label('Добавлять новые товары')
+                            ->default(false)
+                            ->helperText('Если отключить, строки с новыми товарами будут пропущены.'),
+                        Forms\Components\Checkbox::make('add_categories')
+                            ->label('Добавлять новые категории')
+                            ->default(false)
+                            ->helperText('Если отключить, новые категории из файла создаваться не будут.'),
+                        Forms\Components\Checkbox::make('update_titles')
+                            ->label('Обновлять названия товаров')
+                            ->default(false)
+                            ->helperText('Включите, чтобы перезаписывать названия существующих товаров.'),
                     ])
-                    ->action(fn (array $data) => static::importProductsFromXls($data['file']))
+                    ->action(function (array $data): void {
+                        static::importProductsFromXls($data['file'], [
+                            'update_prices' => (bool) ($data['update_prices'] ?? false),
+                            'add_products' => (bool) ($data['add_products'] ?? false),
+                            'add_categories' => (bool) ($data['add_categories'] ?? false),
+                            'update_titles' => (bool) ($data['update_titles'] ?? false),
+                        ]);
+                    })
                     ->modalButton('Импортировать')
                     ->requiresConfirmation(),
             ])
@@ -220,10 +243,17 @@ class ProductResource extends Resource
             ->withCount('reviews');
     }
 
-    protected static function importProductsFromXls(string $relativePath): void
+    protected static function importProductsFromXls(string $relativePath, array $options = []): void
     {
         $disk = Storage::disk('local');
         $fullPath = $disk->path($relativePath);
+
+        $options = array_merge([
+            'update_prices' => true,
+            'add_products' => true,
+            'add_categories' => true,
+            'update_titles' => false,
+        ], $options);
 
         $logContext = [
             'file' => $relativePath,
@@ -233,6 +263,7 @@ class ProductResource extends Resource
             'products_updated' => 0,
             'skipped_rows' => [],
             'price_skipped' => [],
+            'options' => $options,
         ];
 
         try {
@@ -276,8 +307,22 @@ class ProductResource extends Resource
                 $isCategoryRow = $name !== '' && $retailPrice === null && $stock === null && $purchasePrice === null;
 
                 if ($isCategoryRow) {
-                    $currentCategory = static::findOrCreateCategory($code, $name, $createdCategories);
-                    $logContext['categories_created'] = $createdCategories;
+                    if ($options['add_categories']) {
+                        $currentCategory = static::findOrCreateCategory($code, $name, $createdCategories);
+                        $logContext['categories_created'] = $createdCategories;
+                    } else {
+                        $currentCategory = Category::firstWhere('title', $name);
+
+                        if (! $currentCategory) {
+                            $logContext['skipped_rows'][] = [
+                                'row' => $index,
+                                'code' => $code,
+                                'name' => $name,
+                                'reason' => 'category_creation_disabled',
+                            ];
+                        }
+                    }
+
                     continue;
                 }
 
@@ -295,22 +340,50 @@ class ProductResource extends Resource
                 $exists = $product->exists;
 
                 if (! $exists) {
+                    if (! $options['add_products']) {
+                        $logContext['skipped_rows'][] = [
+                            'row' => $index,
+                            'code' => $code,
+                            'name' => $name,
+                            'reason' => 'product_creation_disabled',
+                        ];
+
+                        continue;
+                    }
+
                     $product->title = $name;
                     $product->slug = static::generateUniqueSlug($name, $code, Product::class);
                     $product->description = $product->description ?? '';
                     $product->category_id = $currentCategory->id;
-                } elseif (! $product->category_id) {
-                    $product->category_id = $currentCategory->id;
+                } else {
+                    if ($options['update_titles'] && $name !== '' && $product->title !== $name) {
+                        $product->title = $name;
+                    }
+
+                    if (! $product->category_id) {
+                        $product->category_id = $currentCategory->id;
+                    }
                 }
 
                 if ($retailPrice !== null && $retailPrice > 0) {
-                    $product->price = $retailPrice;
+                    if ($options['update_prices'] || ! $exists) {
+                        $product->price = $retailPrice;
+                    } else {
+                        $logContext['price_skipped'][] = [
+                            'row' => $index,
+                            'article' => $code,
+                            'name' => $name,
+                            'value' => $retailPrice,
+                            'reason' => 'price_update_disabled',
+                        ];
+                    }
                 } elseif ($retailPrice !== null) {
                     $logContext['price_skipped'][] = [
                         'row' => $index,
                         'article' => $code,
                         'name' => $name,
                         'value' => $retailPrice,
+                        'reason' => 'invalid_price_value',
                     ];
                 }
 
