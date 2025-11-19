@@ -14,7 +14,7 @@ const services = [
         color: 'from-primary to-secondary',
         items: [
             'Установка смесителей',
-            'Монтаж ванн и душевых кабин',
+            'Установка радиаторов, полотенцесушителей',
             'Установка унитазов и биде',
             'Подключение стиральных машин'
         ],
@@ -55,50 +55,50 @@ const services = [
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
-        <section class="bg-primary text-white py-10 md:py-16">
-            <div class="container mx-auto px-4 text-center">
-                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">Наши услуги</h1>
-                <p class="text-sm md:text-lg lg:text-xl text-blue-100 max-w-3xl mx-auto">
+        <section class="bg-primary md:py-16 py-10 text-white">
+            <div class="container px-4 mx-auto text-center">
+                <h1 class="md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold">Наши услуги</h1>
+                <p class="md:text-lg lg:text-xl mx-auto max-w-3xl text-sm text-blue-100">
                     Полный спектр услуг по установке, ремонту и обслуживанию сантехнического оборудования.
                     Работаем быстро, качественно и с гарантией.
                 </p>
             </div>
         </section>
 
-        <div class="container mx-auto px-4 py-10 md:py-16">
+        <div class="md:py-16 container px-4 py-10 mx-auto">
             <!-- Main Services -->
-            <section class="mb-12 md:mb-20">
-                <div class="text-center mb-8 md:mb-12">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Основные услуги</h2>
-                    <p class="text-sm md:text-lg lg:text-xl text-gray-600">Профессиональные услуги от сертифицированных мастеров</p>
+            <section class="md:mb-20 mb-12">
+                <div class="md:mb-12 mb-8 text-center">
+                    <h2 class="md:text-3xl lg:text-4xl md:mb-4 mb-2 text-2xl font-bold text-gray-800">Основные услуги</h2>
+                    <p class="md:text-lg lg:text-xl text-sm text-gray-600">Профессиональные услуги от сертифицированных мастеров</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                <div class="md:grid-cols-2 lg:grid-cols-3 md:gap-6 lg:gap-8 grid grid-cols-1 gap-4">
                     <div
                         v-for="service in services"
                         :key="service.title"
-                        class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 group"
+                        class="md:rounded-2xl hover:shadow-2xl group overflow-hidden bg-white rounded-xl shadow-lg transition-all duration-300"
                     >
-                        <div class="p-6 md:p-8 text-white text-center bg-primary">
+                        <div class="md:p-8 bg-primary p-6 text-center text-white">
                             <i :class="`fas ${service.icon} text-4xl md:text-5xl mb-3 md:mb-4`"></i>
-                            <h3 class="text-xl md:text-2xl font-semibold">{{ service.title }}</h3>
+                            <h3 class="md:text-2xl text-xl font-semibold">{{ service.title }}</h3>
                         </div>
-                        <div class="p-6 md:p-8">
-                            <ul class="space-y-2 md:space-y-3 text-gray-600 mb-4 md:mb-6 text-sm md:text-base">
+                        <div class="md:p-8 p-6">
+                            <ul class="md:space-y-3 md:mb-6 md:text-base mb-4 space-y-2 text-sm text-gray-600">
                                 <li
                                     v-for="item in service.items"
                                     :key="item"
                                     class="flex items-start"
                                 >
-                                    <i class="fas fa-check text-green-600 mr-2 md:mr-3 mt-0.5 flex-shrink-0"></i>
+                                    <i class="fas fa-check md:mr-3 flex-shrink-0 mt-0.5 mr-2 text-green-600"></i>
                                     <span>{{ item }}</span>
                                 </li>
                             </ul>
-                            <div class="flex items-center justify-between mb-4 md:mb-6">
-                                <div class="text-xl md:text-2xl font-bold text-primary">{{ service.price }}</div>
-                                <div class="text-xs md:text-sm text-gray-500">{{ service.unit }}</div>
+                            <div class="md:mb-6 flex justify-between items-center mb-4">
+                                <div class="md:text-2xl text-primary text-xl font-bold">{{ service.price }}</div>
+                                <div class="md:text-sm text-xs text-gray-500">{{ service.unit }}</div>
                             </div>
-                            <button class="w-full bg-primary hover:bg-secondary active:bg-secondary text-white py-2.5 md:py-3 rounded-lg font-semibold transition-colors text-sm md:text-base touch-manipulation">
+                            <button class="bg-primary hover:bg-secondary active:bg-secondary md:py-3 md:text-base touch-manipulation py-2.5 w-full text-sm font-semibold text-white rounded-lg transition-colors">
                                 Заказать услугу
                             </button>
                         </div>
@@ -107,29 +107,29 @@ const services = [
             </section>
 
             <!-- Process -->
-            <section class="mb-12 md:mb-20">
-                <div class="text-center mb-8 md:mb-12">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-2 md:mb-4">Как мы работаем</h2>
-                    <p class="text-sm md:text-lg lg:text-xl text-gray-600">Простой и понятный процесс от заявки до результата</p>
+            <section class="md:mb-20 mb-12">
+                <div class="md:mb-12 mb-8 text-center">
+                    <h2 class="md:text-3xl lg:text-4xl md:mb-4 mb-2 text-2xl font-bold text-gray-800">Как мы работаем</h2>
+                    <p class="md:text-lg lg:text-xl text-sm text-gray-600">Простой и понятный процесс от заявки до результата</p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <div class="sm:grid-cols-2 lg:grid-cols-4 md:gap-8 grid grid-cols-1 gap-6">
                     <div class="text-center">
-                        <div class="bg-primary text-white w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 text-xl md:text-2xl font-bold">
+                        <div class="bg-primary md:w-20 md:h-20 md:mb-6 md:text-2xl flex justify-center items-center mx-auto mb-4 w-16 h-16 text-xl font-bold text-white rounded-full">
                             1
                         </div>
-                        <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Заявка</h3>
-                        <p class="text-gray-600 text-sm md:text-base">
+                        <h3 class="md:text-xl md:mb-4 mb-3 text-lg font-semibold">Заявка</h3>
+                        <p class="md:text-base text-sm text-gray-600">
                             Оставьте заявку по телефону, через сайт или мессенджер.
                             Опишите проблему или желаемую услугу.
                         </p>
                     </div>
 
                     <div class="text-center">
-                        <div class="bg-primary text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                        <div class="bg-primary flex justify-center items-center mx-auto mb-6 w-20 h-20 text-2xl font-bold text-white rounded-full">
                             2
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Консультация</h3>
+                        <h3 class="mb-4 text-xl font-semibold">Консультация</h3>
                         <p class="text-gray-600">
                             Наш специалист свяжется с вами, уточнит детали
                             и согласует удобное время визита.
@@ -137,10 +137,10 @@ const services = [
                     </div>
 
                     <div class="text-center">
-                        <div class="bg-primary text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                        <div class="bg-primary flex justify-center items-center mx-auto mb-6 w-20 h-20 text-2xl font-bold text-white rounded-full">
                             3
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Выполнение</h3>
+                        <h3 class="mb-4 text-xl font-semibold">Выполнение</h3>
                         <p class="text-gray-600">
                             Мастер приедет в назначенное время с инструментами
                             и выполнит работу качественно и быстро.
@@ -148,10 +148,10 @@ const services = [
                     </div>
 
                     <div class="text-center">
-                        <div class="bg-primary text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold">
+                        <div class="bg-primary flex justify-center items-center mx-auto mb-6 w-20 h-20 text-2xl font-bold text-white rounded-full">
                             4
                         </div>
-                        <h3 class="text-xl font-semibold mb-4">Гарантия</h3>
+                        <h3 class="mb-4 text-xl font-semibold">Гарантия</h3>
                         <p class="text-gray-600">
                             Предоставляем гарантию на выполненные работы
                             и остаемся на связи для поддержки.
@@ -162,15 +162,15 @@ const services = [
 
             <!-- CTA -->
             <section class="text-center">
-                <div class="bg-primary rounded-2xl md:rounded-3xl p-6 md:p-10 lg:p-12 text-white">
-                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">Нужна помощь с сантехникой?</h2>
-                    <p class="text-sm md:text-lg lg:text-xl text-blue-100 mb-6 md:mb-8 max-w-2xl mx-auto">
-                        Оставьте заявку, и наш мастер свяжется с вами в течение 15 минут для уточнения деталей
+                <div class="bg-primary md:rounded-3xl md:p-10 lg:p-12 p-6 text-white rounded-2xl">
+                    <h2 class="md:text-3xl lg:text-4xl md:mb-6 mb-4 text-2xl font-bold">Нужна помощь с сантехникой?</h2>
+                    <p class="md:text-lg lg:text-xl md:mb-8 mx-auto mb-6 max-w-2xl text-sm text-blue-100">
+                        Оставьте заявку, и наш мастер свяжется с вами для уточнения деталей
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+                    <div class="sm:flex-row md:gap-4 flex flex-col gap-3 justify-center">
                         <a
                             href="tel:+79512353226"
-                            class="bg-accent hover:bg-yellow-500 active:bg-yellow-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-semibold transition-colors inline-flex items-center justify-center text-sm md:text-base touch-manipulation"
+                            class="bg-accent hover:bg-yellow-500 active:bg-yellow-600 md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white rounded-lg transition-colors"
                         >
                             <i class="fas fa-phone mr-2"></i>
                             Вызвать мастера

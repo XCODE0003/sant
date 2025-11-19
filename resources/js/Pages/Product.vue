@@ -374,7 +374,7 @@ watch(
                             <i class="fas fa-truck text-primary md:mr-3 md:text-base flex-shrink-0 mt-1 mr-2 text-sm"></i>
                             <div>
                                 <div class="md:text-base text-sm font-medium">Курьерская доставка</div>
-                                <div class="md:text-sm text-xs text-gray-600">Бесплатно от 5 000 ₽, доставка на следующий день</div>
+                                <div class="md:text-sm text-xs text-gray-600">Доставка на следующий день</div>
                             </div>
                         </div>
                         <div class="flex items-start">

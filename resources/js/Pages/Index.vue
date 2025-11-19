@@ -61,12 +61,12 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                 <div class="md:grid-cols-2 md:gap-12 grid gap-8 items-center">
 
                     <div>
-                        <div class="sm:flex-row mb-5 md:gap-4 flex flex-col gap-3">
+                        <div class="sm:flex-row md:gap-4 flex flex-col gap-3 mb-5">
                             <Link
                                 href="/catalog"
                                 class="bg-accent text-yellow !text-2xl active:bg-yellow-600 md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 font-semibold text-white rounded-lg transition-colors"
                             >
-                                <i class="fas fa-shopping-bag mr-2 "></i>
+                                <i class="fas fa-shopping-bag mr-2"></i>
                                 Каталог товаров
                             </Link>
                             <Link
@@ -92,7 +92,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                 <div class="bg-white/20 md:p-6 p-4 text-center rounded-xl">
                                     <i class="fas fa-truck md:text-4xl md:mb-4 mb-3 text-3xl"></i>
                                     <h3 class="md:text-base mb-2 text-sm font-semibold">Быстрая доставка</h3>
-                                    <p class="md:text-sm text-xs text-blue-100">От 1 дня по Москве</p>
+                                    <p class="md:text-sm text-xs text-blue-100">От 1 дня по Челябинску</p>
                                 </div>
                                 <div class="bg-white/20 p-6 text-center rounded-xl">
                                     <i class="fas fa-shield-alt mb-4 text-4xl"></i>
@@ -101,8 +101,8 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                 </div>
                                 <div class="bg-white/20 p-6 text-center rounded-xl">
                                     <i class="fas fa-headset mb-4 text-4xl"></i>
-                                    <h3 class="mb-2 font-semibold">Поддержка 24/7</h3>
-                                    <p class="text-sm text-blue-100">Консультации экспертов</p>
+                                    <h3 class="mb-2 font-semibold">Поддержка</h3>
+                                    <p class="text-sm text-blue-100">Не знаете, что выбрать? Мы поможем!</p>
                                 </div>
                                 <div class="bg-white/20 md:p-6 p-4 text-center rounded-xl">
                                     <i class="fas fa-medal md:text-4xl md:mb-4 mb-3 text-3xl"></i>
@@ -306,7 +306,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                             <i class="fas fa-shipping-fast text-primary text-3xl"></i>
                         </div>
                         <h3 class="mb-2 text-xl font-semibold">Быстрая доставка</h3>
-                        <p class="text-gray-600">Доставим ваш заказ в течение 24 часов по Москве</p>
+                        <p class="text-gray-600">Доставим ваш заказ в течение 24 часов по Челябинску</p>
                     </div>
                     <div class="text-center">
                         <div class="flex justify-center items-center mx-auto mb-4 w-20 h-20 bg-green-100 rounded-full">

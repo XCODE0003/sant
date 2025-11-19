@@ -255,9 +255,9 @@ onBeforeUnmount(() => {
     <header class="sticky top-0 z-50 bg-white shadow-lg">
         <div class="container px-4 mx-auto">
             <!-- Top bar -->
-            <div class="flex justify-between max-md:flex-col gap-3 items-center py-2 text-sm text-gray-600 border-b">
-                <div class="flex max-md:grid grid-cols-2  items-center space-x-6">
-                    <div class="flex max-md:justify-center items-center">
+            <div class="max-md:flex-col flex gap-3 justify-between items-center py-2 text-sm text-gray-600 border-b">
+                <div class="max-md:grid flex grid-cols-2 items-center space-x-6">
+                    <div class="max-md:justify-center flex items-center">
                         <i class="fas fa-phone text-primary mr-2"></i>
                         <a href="tel:+79512353226" class="hover:text-primary">+7 (951) 235-32-26</a>
                     </div>
@@ -269,20 +269,20 @@ onBeforeUnmount(() => {
                      <i class="fas fa-user-tie text-primary mr-2" aria-hidden="true"></i>
                      <span class="hover:text-primary">ИП Нурисламова Наталья Владимировна</span>
                  </div>
-                 <div class=" flex items-center max-md:justify-center text-xs">
+                 <div class="max-md:justify-center flex items-center text-xs">
                      <i class="fas fa-id-card text-primary mr-2" aria-hidden="true"></i>
                      <span class="hover:text-primary">ИНН 744808080440</span>
                  </div>
                 </div>
-                <div class="flex max-md:grid grid-cols-2 items-center space-x-4">
-                    <span class="flex max-md:justify-center items-center text-xs">
+                <div class="max-md:grid flex grid-cols-2 items-center space-x-4">
+                    <span class="max-md:justify-center flex items-center text-xs">
                         <i class="fas fa-clock text-primary mr-2"></i>
                         Пн-Пт: 8:30-17:30
                     </span>
-                    <span class="flex max-md:justify-center items-center text-xs">
-                        <i class="fas fa-map-marker-alt  text-primary mr-2"></i>
+                    <a href="https://yandex.ru/maps/-/CLSA4MNv" class="max-md:justify-center flex items-center text-xs">
+                        <i class="fas fa-map-marker-alt text-primary mr-2"></i>
                         г.Челябинск, Ул.Работниц 89/1 павильон 3306 СК "Перекресток"
-                    </span>
+                    </a>
                 </div>
             </div>
 
@@ -293,7 +293,7 @@ onBeforeUnmount(() => {
                         <i class="fas fa-wrench text-2xl"></i>
                     </div>
                     <div>
-                        <div class="p-0.5 rounded-xl px-1 bg-accent w-fit">
+                        <div class="bg-accent w-fit p-0.5 px-1 rounded-xl">
                             <h1 class="text-2xl font-bold text-[#f1e811]">Акват<span class="text-primary">Э</span>рия</h1>
                         </div>
                         <p class="text-sm text-gray-600">Территория воды и тепла</p>
@@ -424,7 +424,7 @@ onBeforeUnmount(() => {
                     </Link>
 
                     <Link href="/cart" class="relative">
-                        <div class="btn p-2 rounded-xl bg-accent px-10 text-yellow flex items-center  transition-colors cursor-pointer">
+                        <div class="btn bg-accent text-yellow flex items-center p-2 px-10 rounded-xl transition-colors cursor-pointer">
                             <i class="fas fa-shopping-cart mr-2 text-xl"></i>
                             <span class="md:block hidden">Корзина</span>
                             <span
