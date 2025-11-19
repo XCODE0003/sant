@@ -225,7 +225,7 @@ watch(
                                 v-if="currentImage"
                                 :src="currentImage"
                                 :alt="product.title"
-                                class="object-cover w-full h-full"
+                                class="object-contain w-full h-full"
                             />
                             <i v-else class="fas fa-faucet text-8xl text-gray-300"></i>
                         </div>
