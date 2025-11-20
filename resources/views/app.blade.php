@@ -72,67 +72,67 @@
 
         {{-- Structured Data - Organization --}}
         <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Store",
-            "name": "АкватЭрия",
-            "description": "Продажа сантехники и санитарно-технического оборудования в Челябинске",
-            "url": "{{ url('/') }}",
-            "logo": "{{ asset('apple-touch-icon.png') }}",
-            "image": "{{ asset('apple-touch-icon.png') }}",
-            "telephone": "+7-951-235-32-26",
-            "email": "qwer-75@mail.ru",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Работниц, 89/1, павильон 3306",
-                "addressLocality": "Челябинск",
-                "addressRegion": "Челябинская область",
-                "addressCountry": "RU"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "55.160",
-                "longitude": "61.402"
-            },
-            "openingHoursSpecification": [
-                {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                    "opens": "08:30",
-                    "closes": "17:30"
-                }
+        @json([
+            '@context' => 'https://schema.org',
+            '@type' => 'Store',
+            'name' => 'АкватЭрия',
+            'description' => 'Продажа сантехники и санитарно-технического оборудования в Челябинске',
+            'url' => url('/'),
+            'logo' => asset('apple-touch-icon.png'),
+            'image' => asset('apple-touch-icon.png'),
+            'telephone' => '+7-951-235-32-26',
+            'email' => 'qwer-75@mail.ru',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'ул. Работниц, 89/1, павильон 3306',
+                'addressLocality' => 'Челябинск',
+                'addressRegion' => 'Челябинская область',
+                'addressCountry' => 'RU'
             ],
-            "priceRange": "₽₽",
-            "foundingDate": "2001",
-            "slogan": "Территория воды и тепла"
-        }
+            'geo' => [
+                '@type' => 'GeoCoordinates',
+                'latitude' => '55.160',
+                'longitude' => '61.402'
+            ],
+            'openingHoursSpecification' => [
+                [
+                    '@type' => 'OpeningHoursSpecification',
+                    'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                    'opens' => '08:30',
+                    'closes' => '17:30'
+                ]
+            ],
+            'priceRange' => '₽₽',
+            'foundingDate' => '2001',
+            'slogan' => 'Территория воды и тепла'
+        ])
         </script>
 
         {{-- Structured Data - Local Business --}}
         <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            "name": "ИП Нурисламова Наталья Владимировна",
-            "alternateName": "АкватЭрия",
-            "url": "{{ url('/') }}",
-            "telephone": "+7-951-235-32-26",
-            "email": "qwer-75@mail.ru",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "ул. Работниц, 89/1",
-                "addressLocality": "Челябинск",
-                "postalCode": "454000",
-                "addressCountry": "RU"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "55.160",
-                "longitude": "61.402"
-            },
-            "taxID": "744808080440",
-            "legalName": "ИП Нурисламова Наталья Владимировна"
-        }
+        @json([
+            '@context' => 'https://schema.org',
+            '@type' => 'LocalBusiness',
+            'name' => 'ИП Нурисламова Наталья Владимировна',
+            'alternateName' => 'АкватЭрия',
+            'url' => url('/'),
+            'telephone' => '+7-951-235-32-26',
+            'email' => 'qwer-75@mail.ru',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'ул. Работниц, 89/1',
+                'addressLocality' => 'Челябинск',
+                'postalCode' => '454000',
+                'addressCountry' => 'RU'
+            ],
+            'geo' => [
+                '@type' => 'GeoCoordinates',
+                'latitude' => '55.160',
+                'longitude' => '61.402'
+            ],
+            'taxID' => '744808080440',
+            'legalName' => 'ИП Нурисламова Наталья Владимировна'
+        ])
         </script>
     </head>
     <body class="font-sans antialiased">
