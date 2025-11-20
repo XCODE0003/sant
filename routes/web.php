@@ -213,6 +213,7 @@ Route::get('/catalog', function (Request $request) use ($mapProduct, $mapCategor
 
     $products = $productsQuery
         ->orderByDesc('updated_at')
+        ->orderByDesc('title')
         ->paginate(12)
         ->withQueryString();
 
