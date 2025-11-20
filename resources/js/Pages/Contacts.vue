@@ -103,7 +103,7 @@ const submitForm = () => {
                             <!-- <a href="#" class="p-3 text-white bg-green-500 rounded-full transition-colors">
                                 <i class="fab fa-whatsapp"></i>
                             </a> -->
-                            <a href="https://vk.com/club232308766" class="bg-primary ounded-full p-3 text-white transition-colors">
+                            <a href="https://vk.com/club232308766" class="bg-primary p-3 text-white rounded-full transition-colors">
                                 <i class="fab fa-vk"></i>
                             </a>
                         </div>
