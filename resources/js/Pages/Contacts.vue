@@ -97,13 +97,13 @@ const submitForm = () => {
                         </div>
                         <h3 class="mb-4 text-xl font-semibold">Мессенджеры</h3>
                         <div class="flex justify-center space-x-4">
-                            <a href="#" class="hover:bg-blue-600 p-3 text-white bg-blue-500 rounded-full transition-colors">
+                            <a href="https://t.me/san3306" class="hover:bg-blue-600 p-3 text-white bg-blue-500 rounded-full transition-colors">
                                 <i class="fab fa-telegram"></i>
                             </a>
                             <a href="#" class="hover:bg-green-600 p-3 text-white bg-green-500 rounded-full transition-colors">
                                 <i class="fab fa-whatsapp"></i>
                             </a>
-                            <a href="#" class="hover:bg-blue-700 p-3 text-white bg-blue-600 rounded-full transition-colors">
+                            <a href="https://vk.com/club232308766" class="hover:bg-blue-700 p-3 text-white bg-blue-600 rounded-full transition-colors">
                                 <i class="fab fa-vk"></i>
                             </a>
                         </div>
