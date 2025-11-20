@@ -17,13 +17,13 @@
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="АкватЭрия">
         <meta property="og:locale" content="ru_RU">
-        <meta property="og:image" content="{{ asset('apple-touch-icon.png') }}">
+        <meta property="og:image" content="{{ asset('favicon.png') }}">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
 
         {{-- Twitter Card Meta Tags --}}
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="{{ asset('apple-touch-icon.png') }}">
+        <meta name="twitter:image" content="{{ asset('favicon.png') }}">
 
         {{-- Business Information --}}
         <meta name="geo.region" content="RU-CHE">
@@ -60,7 +60,7 @@
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" href="/favicon.png" sizes="any">
-        <link rel="apple-touch-icon" href="/favicon.png">
+        <link rel="favicon" href="/favicon.png">
         <link rel="canonical" href="{{ url()->current() }}">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -77,8 +77,8 @@
             'name' => 'АкватЭрия',
             'description' => 'Продажа сантехники и санитарно-технического оборудования в Челябинске',
             'url' => url('/'),
-            'logo' => asset('apple-touch-icon.png'),
-            'image' => asset('apple-touch-icon.png'),
+            'logo' => asset('favicon.png'),
+            'image' => asset('favicon.png'),
             'telephone' => '+7-951-235-32-26',
             'email' => 'qwer-75@mail.ru',
             'address' => [
