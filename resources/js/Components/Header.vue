@@ -356,7 +356,7 @@ onBeforeUnmount(() => {
 
                     <div
                         v-if="showDesktopSuggestions"
-                        class="overflow-hidden absolute right-0 left-0 top-full z-50 mt-2 bg-white rounded-2xl border border-gray-200 shadow-2xl"
+                        class="overflow-hidden overflow-y-auto absolute max-h-[55vh] right-0 left-0 top-full z-50 mt-2 bg-white rounded-2xl border border-gray-200 shadow-2xl"
                     >
                         <div v-if="searchError && !isSuggestionsLoading" class="px-4 py-2 text-xs text-red-600 bg-red-50 border-b border-red-100">
                             {{ searchError }}
