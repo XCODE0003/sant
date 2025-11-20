@@ -142,6 +142,42 @@ $mapNews = static function (News $news) use ($assetPath, $normalizeTags): array 
     ];
 };
 
+$escapeLikeWildcards = static function (string $value): string {
+    return str_replace(
+        ['\\', '%', '_'],
+        ['\\\\', '\%', '\_'],
+        $value,
+    );
+};
+
+$extractSearchTerms = static function (string $value): array {
+    return collect(preg_split('/\s+/u', trim($value), -1, PREG_SPLIT_NO_EMPTY))
+        ->filter()
+        ->unique(fn ($term) => mb_strtolower($term))
+        ->values()
+        ->all();
+};
+
+$applySearchFilter = static function (Builder $builder, array $terms, array $columns) use ($escapeLikeWildcards): void {
+    if ($terms === []) {
+        return;
+    }
+
+    $builder->where(function (Builder $query) use ($terms, $columns, $escapeLikeWildcards) {
+        foreach ($terms as $term) {
+            $escapedTerm = $escapeLikeWildcards($term);
+            $like = '%' . $escapedTerm . '%';
+
+            $query->where(function (Builder $nested) use ($columns, $like) {
+                foreach ($columns as $index => $column) {
+                    $method = $index === 0 ? 'where' : 'orWhere';
+                    $nested->{$method}($column, 'like', $like);
+                }
+            });
+        }
+    });
+};
+
 /*
 |--------------------------------------------------------------------------
 | Главная страница
@@ -302,7 +338,7 @@ Route::get('/cart', function () {
     return Inertia::render('Cart');
 })->name('cart');
 
-Route::get('/search/suggestions', function (Request $request) use ($mapProductPreview) {
+Route::get('/search/suggestions', function (Request $request) use ($mapProductPreview, $extractSearchTerms, $applySearchFilter) {
     $query = trim((string) $request->query('q', ''));
 
     if ($query === '') {
@@ -311,16 +347,15 @@ Route::get('/search/suggestions', function (Request $request) use ($mapProductPr
         ]);
     }
 
-    $products = Product::query()
-        ->active()
-        ->with(['category' => fn ($relation) => $relation->select('id', 'title')])
-        ->where(function (Builder $builder) use ($query) {
-            $like = '%' . $query . '%';
+    $terms = $extractSearchTerms($query);
 
-            $builder->where('title', 'like', $like)
-                ->orWhere('article_id', 'like', $like)
-                ->orWhere('slug', 'like', $like);
-        })
+    $productsQuery = Product::query()
+        ->active()
+        ->with(['category' => fn ($relation) => $relation->select('id', 'title')]);
+
+    $applySearchFilter($productsQuery, $terms, ['title', 'article_id', 'slug']);
+
+    $products = $productsQuery
         ->orderByRaw('CASE WHEN article_id = ? THEN 0 ELSE 1 END', [$query])
         ->orderByDesc('discount')
         ->orderBy('title')
@@ -332,7 +367,7 @@ Route::get('/search/suggestions', function (Request $request) use ($mapProductPr
     ]);
 })->name('search.suggestions');
 
-Route::get('/search', function (Request $request) use ($mapProduct, $mapNews) {
+Route::get('/search', function (Request $request) use ($mapProduct, $mapNews, $extractSearchTerms, $applySearchFilter) {
     $query = trim((string) $request->query('q', ''));
 
     if ($query === '') {
@@ -343,30 +378,23 @@ Route::get('/search', function (Request $request) use ($mapProduct, $mapNews) {
         ]);
     }
 
-    $products = Product::query()
+    $terms = $extractSearchTerms($query);
+
+    $productsQuery = Product::query()
         ->active()
         ->with('category')
-        ->withAvg('reviews', 'rating')
-        ->where(function (Builder $builder) use ($query) {
-            $like = '%' . $query . '%';
+        ->withAvg('reviews', 'rating');
 
-            $builder->where('title', 'like', $like)
-                ->orWhere('article_id', 'like', $like)
-                ->orWhere('slug', 'like', $like);
-        })
-        ->take(12)
-        ->get();
+    $applySearchFilter($productsQuery, $terms, ['title', 'article_id', 'slug']);
 
-    $news = News::query()
-        ->published()
-        ->where(function (Builder $builder) use ($query) {
-            $like = '%' . $query . '%';
+    $products = $productsQuery->get();
 
-            $builder->where('title', 'like', $like)
-                ->orWhere('excerpt', 'like', $like)
-                ->orWhere('content', 'like', $like)
-                ->orWhere('tags', 'like', $like);
-        })
+    $newsQuery = News::query()
+        ->published();
+
+    $applySearchFilter($newsQuery, $terms, ['title', 'excerpt', 'content', 'tags']);
+
+    $news = $newsQuery
         ->take(8)
         ->get();
 
