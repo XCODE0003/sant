@@ -212,8 +212,14 @@ Route::get('/catalog', function (Request $request) use ($mapProduct, $mapCategor
     }
 
     $products = $productsQuery
-        ->orderByDesc('updated_at')
-        ->orderByDesc('title')
+        ->orderByRaw("
+            CASE
+                WHEN title REGEXP '^[А-Яа-яЁё]' THEN 1
+                WHEN title REGEXP '^[A-Za-z]' THEN 2
+                WHEN title REGEXP '^[0-9]' THEN 3
+                ELSE 4
+            END, title ASC
+        ")
         ->paginate(12)
         ->withQueryString();
 
