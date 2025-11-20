@@ -71,8 +71,8 @@
         @inertiaHead
 
         {{-- Structured Data - Organization --}}
-        <script type="application/ld+json">
-        @json([
+        @php
+        $organizationData = [
             '@context' => 'https://schema.org',
             '@type' => 'Store',
             'name' => 'АкватЭрия',
@@ -105,12 +105,9 @@
             'priceRange' => '₽₽',
             'foundingDate' => '2001',
             'slogan' => 'Территория воды и тепла'
-        ])
-        </script>
+        ];
 
-        {{-- Structured Data - Local Business --}}
-        <script type="application/ld+json">
-        @json([
+        $localBusinessData = [
             '@context' => 'https://schema.org',
             '@type' => 'LocalBusiness',
             'name' => 'ИП Нурисламова Наталья Владимировна',
@@ -132,7 +129,16 @@
             ],
             'taxID' => '744808080440',
             'legalName' => 'ИП Нурисламова Наталья Владимировна'
-        ])
+        ];
+        @endphp
+
+        <script type="application/ld+json">
+        {!! json_encode($organizationData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+        </script>
+
+        {{-- Structured Data - Local Business --}}
+        <script type="application/ld+json">
+        {!! json_encode($localBusinessData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
         </script>
     </head>
     <body class="font-sans antialiased">
