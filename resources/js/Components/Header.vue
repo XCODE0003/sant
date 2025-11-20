@@ -283,6 +283,14 @@ onBeforeUnmount(() => {
                         <i class="fas fa-map-marker-alt text-primary mr-2"></i>
                         г.Челябинск, Ул.Работниц 89/1 павильон 3306 СК "Перекресток"
                     </a>
+                    <div class="flex gap-2 items-center">
+                        <a href="https://vk.com/club232308766" class="text-primary rounded-lg transition-colors">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                        <a href="https://t.me/san3306" class="text-primary rounded-lg transition-colors">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 

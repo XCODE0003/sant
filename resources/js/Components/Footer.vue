@@ -27,10 +27,10 @@ defineProps({
                         Мы предлагаем широкий ассортимент качественной сантехники от ведущих мировых производителей.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="hover:bg-primary p-3 bg-gray-800 rounded-lg transition-colors">
+                        <a href="https://vk.com/club232308766" class="hover:bg-primary p-3 bg-gray-800 rounded-lg transition-colors">
                             <i class="fab fa-vk"></i>
                         </a>
-                        <a href="#" class="hover:bg-primary p-3 bg-gray-800 rounded-lg transition-colors">
+                        <a href="https://t.me/san3306" class="hover:bg-primary p-3 bg-gray-800 rounded-lg transition-colors">
                             <i class="fab fa-telegram"></i>
                         </a>
                         <a href="#" class="hover:bg-primary p-3 bg-gray-800 rounded-lg transition-colors">
