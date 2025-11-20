@@ -79,27 +79,31 @@ defineProps({
                     </ul>
                 </div>
 
-                <div>
+                <div itemscope itemtype="https://schema.org/Organization">
                     <h4 class="mb-6 text-xl font-semibold">Контакты</h4>
+                    <meta itemprop="name" content="АкватЭрия" />
                     <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-primary mr-3"></i>
-                            <span class="text-gray-400">г. Челябинск, ул. Работниц, 89/1</span>
+                        <div class="flex items-center" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                            <i class="fas fa-map-marker-alt text-primary mr-3" aria-hidden="true"></i>
+                            <span class="text-gray-400">
+                                <span itemprop="addressLocality">г. Челябинск</span>,
+                                <span itemprop="streetAddress">ул. Работниц, 89/1</span>
+                            </span>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-phone text-primary mr-3"></i>
-                            <a href="tel:+79512353226" class="hover:text-white text-gray-400 transition-colors">
+                            <i class="fas fa-phone text-primary mr-3" aria-hidden="true"></i>
+                            <a href="tel:+79512353226" class="hover:text-white text-gray-400 transition-colors" itemprop="telephone">
                                 +7 (951) 235-32-26
                             </a>
                         </div>
                         <div class="flex items-center">
-                            <i class="fas fa-envelope text-primary mr-3"></i>
-                            <a href="mailto:qwer-75@mail.ru" class="hover:text-white text-gray-400 transition-colors">
+                            <i class="fas fa-envelope text-primary mr-3" aria-hidden="true"></i>
+                            <a href="mailto:qwer-75@mail.ru" class="hover:text-white text-gray-400 transition-colors" itemprop="email">
                                 qwer-75@mail.ru
                             </a>
                         </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-clock text-primary mr-3"></i>
+                        <div class="flex items-center" itemprop="openingHours" content="Mo-Fr 08:30-17:30">
+                            <i class="fas fa-clock text-primary mr-3" aria-hidden="true"></i>
                             <span class="text-gray-400">Пн-Пт: 8:30-17:30</span>
                         </div>
                     </div>

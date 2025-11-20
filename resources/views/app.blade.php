@@ -3,6 +3,33 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        {{-- SEO Meta Tags --}}
+        <meta name="description" content="АкватЭрия - продажа сантехники в Челябинске с 2001 года. Широкий ассортимент качественной сантехники, комплектующих и запчастей. Доставка, установка, гарантия до 5 лет.">
+        <meta name="keywords" content="сантехника челябинск, купить сантехнику, санитарно-техническое оборудование, комплектующие для сантехники, запчасти сантехника, доставка сантехники, установка сантехники">
+        <meta name="author" content="ИП Нурисламова Наталья Владимировна">
+        <meta name="robots" content="index, follow">
+        <meta name="googlebot" content="index, follow">
+        <meta name="theme-color" content="#1e40af">
+
+        {{-- Open Graph Meta Tags --}}
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="АкватЭрия">
+        <meta property="og:locale" content="ru_RU">
+        <meta property="og:image" content="{{ asset('apple-touch-icon.png') }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+
+        {{-- Twitter Card Meta Tags --}}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="{{ asset('apple-touch-icon.png') }}">
+
+        {{-- Business Information --}}
+        <meta name="geo.region" content="RU-CHE">
+        <meta name="geo.placename" content="Челябинск">
+        <meta name="geo.position" content="55.160;61.402">
+        <meta name="ICBM" content="55.160, 61.402">
 
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
@@ -35,12 +62,78 @@
         <link rel="icon" href="/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="canonical" href="{{ url()->current() }}">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
         @vite(['resources/js/app.js'])
         @inertiaHead
+
+        {{-- Structured Data - Organization --}}
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Store",
+            "name": "АкватЭрия",
+            "description": "Продажа сантехники и санитарно-технического оборудования в Челябинске",
+            "url": "{{ url('/') }}",
+            "logo": "{{ asset('apple-touch-icon.png') }}",
+            "image": "{{ asset('apple-touch-icon.png') }}",
+            "telephone": "+7-951-235-32-26",
+            "email": "qwer-75@mail.ru",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Работниц, 89/1, павильон 3306",
+                "addressLocality": "Челябинск",
+                "addressRegion": "Челябинская область",
+                "addressCountry": "RU"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "55.160",
+                "longitude": "61.402"
+            },
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                    "opens": "08:30",
+                    "closes": "17:30"
+                }
+            ],
+            "priceRange": "₽₽",
+            "foundingDate": "2001",
+            "slogan": "Территория воды и тепла"
+        }
+        </script>
+
+        {{-- Structured Data - Local Business --}}
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "ИП Нурисламова Наталья Владимировна",
+            "alternateName": "АкватЭрия",
+            "url": "{{ url('/') }}",
+            "telephone": "+7-951-235-32-26",
+            "email": "qwer-75@mail.ru",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Работниц, 89/1",
+                "addressLocality": "Челябинск",
+                "postalCode": "454000",
+                "addressCountry": "RU"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "55.160",
+                "longitude": "61.402"
+            },
+            "taxID": "744808080440",
+            "legalName": "ИП Нурисламова Наталья Владимировна"
+        }
+        </script>
     </head>
     <body class="font-sans antialiased">
         @inertia

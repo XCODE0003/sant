@@ -1,6 +1,6 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Link, router } from '@inertiajs/vue3';
+import { Link, router, Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { useShopStore } from '@/stores/useShopStore';
 
@@ -51,10 +51,60 @@ const toggleFavorite = (product) => {
 
 const isFavorite = (product) => shopStore.isFavorite(product.id);
 const isInCart = (product) => shopStore.isInCart(product.id);
+
+const structuredData = computed(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'АкватЭрия - Территория воды и тепла',
+    url: window.location.origin,
+    description: 'Продажа сантехники в Челябинске с 2001 года. Широкий ассортимент, доставка, установка, гарантия до 5 лет.',
+    potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${window.location.origin}/search?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+    },
+    publisher: {
+        '@type': 'Organization',
+        name: 'АкватЭрия',
+        logo: {
+            '@type': 'ImageObject',
+            url: `${window.location.origin}/apple-touch-icon.png`,
+        },
+    },
+}));
+
+const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+        {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Главная',
+            item: window.location.origin,
+        },
+    ],
+};
 </script>
 
 <template>
-    <AppLayout title="АкватЭрия - Территория воды и тепла">
+    <Head>
+        <title>АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года</title>
+        <meta name="description" content="Купить сантехнику в Челябинске с доставкой и установкой. Большой выбор санитарно-технического оборудования, комплектующих и запчастей. Работаем с 2001 года. Гарантия до 5 лет. ☎ +7 (951) 235-32-26" />
+        <meta property="og:title" content="АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года" />
+        <meta property="og:description" content="Купить сантехнику в Челябинске с доставкой и установкой. Большой выбор санитарно-технического оборудования. Работаем с 2001 года. Гарантия до 5 лет." />
+        <meta property="og:url" content="https://akvatera.ru/" />
+        <meta name="twitter:title" content="АкватЭрия - Сантехника в Челябинске" />
+        <meta name="twitter:description" content="Купить сантехнику в Челябинске с доставкой и установкой. Работаем с 2001 года. Гарантия до 5 лет." />
+        <link rel="canonical" href="https://akvatera.ru/" />
+    </Head>
+
+    <AppLayout title="АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года">
+        <component :is="'script'" type="application/ld+json">{{ JSON.stringify(structuredData) }}</component>
+        <component :is="'script'" type="application/ld+json">{{ JSON.stringify(breadcrumbStructuredData) }}</component>
         <!-- Hero Section -->
         <section class="bg-primary md:py-16 lg:py-20 py-10 text-white">
             <div class="container px-4 mx-auto">
@@ -65,24 +115,29 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                             <Link
                                 href="/catalog"
                                 class="bg-accent text-yellow !text-2xl active:bg-yellow-600 md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 font-semibold text-white rounded-lg transition-colors"
+                                aria-label="Перейти в каталог товаров сантехники"
                             >
-                                <i class="fas fa-shopping-bag mr-2"></i>
+                                <i class="fas fa-shopping-bag mr-2" aria-hidden="true"></i>
                                 Каталог товаров
                             </Link>
                             <Link
                                 href="/services"
                                 class="hover:bg-white hover:text-primary active:bg-white active:text-primary md:px-8 md:py-4 md:text-base touch-manipulation inline-flex justify-center items-center px-6 py-3 text-sm font-semibold text-white rounded-lg border-2 border-white transition-colors"
+                                aria-label="Узнать о наших услугах по установке сантехники"
                             >
-                                <i class="fas fa-tools mr-2"></i>
+                                <i class="fas fa-tools mr-2" aria-hidden="true"></i>
                                 Наши услуги
                             </Link>
                         </div>
-                        <h2 class="sm:text-3xl md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold leading-tight">
+                        <h1 class="sm:text-3xl md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold leading-tight">
+                            Сантехника в Челябинске: продажа, доставка и установка
+                        </h1>
+                        <h2 class="sm:text-xl md:text-2xl lg:text-3xl md:mb-6 mb-4 text-lg font-semibold leading-tight">
                             ВОДА и ТЕПЛО в Вашем доме начинаются с нас
                         </h2>
                         <p class="sm:text-base md:text-lg lg:text-xl md:mb-8 mb-6 text-sm text-blue-100">
                             С 2001 года мы продаем качественное санитарно-техническое оборудование,
-                            комплектующие и запчасти для ремонта. Профессионализм и надежность.
+                            комплектующие и запчасти для ремонта в Челябинске. Профессионализм и надежность.
                         </p>
 
                     </div>
@@ -171,13 +226,15 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                         <Link :href="`/products/${product.id}`" class="block">
                             <div class="relative">
                                 <div class="sm:h-48 md:h-56 flex overflow-hidden justify-center items-center h-44 bg-gray-100">
-                                    <img
-                                        v-if="getProductImage(product)"
-                                        :src="getProductImage(product)"
-                                        :alt="product.title"
-                                        class="object-cover w-full h-full"
-                                    />
-                                    <i v-else class="fas fa-faucet text-6xl text-gray-300"></i>
+                        <img
+                            v-if="getProductImage(product)"
+                            :src="getProductImage(product)"
+                            :alt="`${product.title} - купить в Челябинске`"
+                            :title="product.title"
+                            class="object-cover w-full h-full"
+                            loading="lazy"
+                        />
+                        <i v-else class="fas fa-faucet text-6xl text-gray-300" aria-hidden="true"></i>
                                 </div>
                                 <span
                                     v-if="product.discount > 0"
