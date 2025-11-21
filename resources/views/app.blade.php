@@ -1,76 +1,93 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  @class(['dark' => ($appearance ?? 'system') == 'dark'])>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
 
-        {{-- SEO Meta Tags --}}
-        <meta name="description" content="АкватЭрия - продажа сантехники в Челябинске с 2001 года. Широкий ассортимент качественной сантехники, комплектующих и запчастей. Доставка, установка, гарантия до 5 лет.">
-        <meta name="keywords" content="сантехника челябинск, купить сантехнику, санитарно-техническое оборудование, комплектующие для сантехники, запчасти сантехника, доставка сантехники, установка сантехники">
-        <meta name="author" content="ИП Нурисламова Наталья Владимировна">
-        <meta name="robots" content="index, follow">
-        <meta name="googlebot" content="index, follow">
-        <meta name="theme-color" content="#1e40af">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        {{-- Open Graph Meta Tags --}}
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="АкватЭрия">
-        <meta property="og:locale" content="ru_RU">
-        <meta property="og:image" content="{{ asset('favicon.png') }}">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
+    {{-- SEO Meta Tags --}}
+    <meta name="description" content="АкватЭрия - продажа сантехники в Челябинске с 2001 года. Широкий ассортимент качественной сантехники, комплектующих и запчастей. Доставка, установка, гарантия до 5 лет.">
+    <meta name="keywords" content="сантехника челябинск, купить сантехнику, санитарно-техническое оборудование, комплектующие для сантехники, запчасти сантехника, доставка сантехники, установка сантехники">
+    <meta name="author" content="ИП Нурисламова Наталья Владимировна">
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow">
+    <meta name="theme-color" content="#1e40af">
 
-        {{-- Twitter Card Meta Tags --}}
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="{{ asset('favicon.png') }}">
+    {{-- Open Graph Meta Tags --}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="АкватЭрия">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image" content="{{ asset('favicon.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-        {{-- Business Information --}}
-        <meta name="geo.region" content="RU-CHE">
-        <meta name="geo.placename" content="Челябинск">
-        <meta name="geo.position" content="55.160;61.402">
-        <meta name="ICBM" content="55.160, 61.402">
 
-        {{-- Inline script to detect system dark mode preference and apply it immediately --}}
-        <script>
-            (function() {
-                const appearance = '{{ $appearance ?? "system" }}';
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=105448597', 'ym');
 
-                if (appearance === 'system') {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        ym(105448597, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", accurateTrackBounce: true, trackLinks: true });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/105448597" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+    {{-- Twitter Card Meta Tags --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="{{ asset('favicon.png') }}">
 
-                    if (prefersDark) {
-                        document.documentElement.classList.add('dark');
-                    }
+    {{-- Business Information --}}
+    <meta name="geo.region" content="RU-CHE">
+    <meta name="geo.placename" content="Челябинск">
+    <meta name="geo.position" content="55.160;61.402">
+    <meta name="ICBM" content="55.160, 61.402">
+
+    {{-- Inline script to detect system dark mode preference and apply it immediately --}}
+    <script>
+        (function () {
+            const appearance = '{{ $appearance ?? "system" }}';
+
+            if (appearance === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (prefersDark) {
+                    document.documentElement.classList.add('dark');
                 }
-            })();
-        </script>
-
-        {{-- Inline style to set the HTML background color based on our theme in app.css --}}
-        <style>
-            html {
-                background-color: oklch(1 0 0);
             }
+        })();
+    </script>
 
-            html.dark {
-                background-color: oklch(0.145 0 0);
-            }
-        </style>
+    {{-- Inline style to set the HTML background color based on our theme in app.css --}}
+    <style>
+        html {
+            background-color: oklch(1 0 0);
+        }
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        html.dark {
+            background-color: oklch(0.145 0 0);
+        }
+    </style>
 
-        <link rel="icon" href="/favicon.png" sizes="any">
-        <link rel="favicon" href="/favicon.png">
-        <link rel="canonical" href="{{ url()->current() }}">
+    <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <link rel="icon" href="/favicon.png" sizes="any">
+    <link rel="favicon" href="/favicon.png">
+    <link rel="canonical" href="{{ url()->current() }}">
 
-        @vite(['resources/js/app.js'])
-        @inertiaHead
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
-        {{-- Structured Data - Organization --}}
-        @php
+    @vite(['resources/js/app.js'])
+    @inertiaHead
+
+    {{-- Structured Data - Organization --}}
+    @php
         $organizationData = [
             '@context' => 'https://schema.org',
             '@type' => 'Store',
@@ -129,18 +146,20 @@
             'taxID' => '744808080440',
             'legalName' => 'ИП Нурисламова Наталья Владимировна'
         ];
-        @endphp
+    @endphp
 
-        <script type="application/ld+json">
+    <script type="application/ld+json">
         {!! json_encode($organizationData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
         </script>
 
-        {{-- Structured Data - Local Business --}}
-        <script type="application/ld+json">
+    {{-- Structured Data - Local Business --}}
+    <script type="application/ld+json">
         {!! json_encode($localBusinessData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
         </script>
-    </head>
-    <body class="font-sans antialiased">
-        @inertia
-    </body>
+</head>
+
+<body class="font-sans antialiased">
+    @inertia
+</body>
+
 </html>
