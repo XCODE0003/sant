@@ -212,7 +212,7 @@ watch(
 </script>
 
 <template>
-    <AppLayout :title="`${product.title} - АкватЭрия`">
+    <AppLayout :title="`${product.title} - Акватэрия`">
         <Breadcrumbs :items="breadcrumbs" />
 
         <div class="md:py-8 container px-4 py-6 mx-auto">
@@ -594,4 +594,3 @@ watch(
         </div>
     </AppLayout>
 </template>
-

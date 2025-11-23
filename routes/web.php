@@ -330,6 +330,10 @@ Route::get('/payment', function () {
     return Inertia::render('Payment');
 })->name('payment');
 
+Route::get('/returns', function () {
+    return Inertia::render('Returns');
+})->name('returns');
+
 Route::get('/favorites', function () {
     return Inertia::render('Favorites');
 })->name('favorites');

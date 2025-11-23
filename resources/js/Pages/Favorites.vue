@@ -26,7 +26,7 @@ const toggleFavorite = (item) => {
 </script>
 
 <template>
-    <AppLayout title="Избранное - АкватЭрия">
+    <AppLayout title="Избранное - Акватэрия">
         <section class="bg-primary text-white py-10 md:py-16">
             <div class="container mx-auto px-4">
                 <h1 class="text-2xl md:text-4xl font-bold">Избранные товары</h1>
@@ -77,4 +77,3 @@ const toggleFavorite = (item) => {
         </div>
     </AppLayout>
 </template>
-

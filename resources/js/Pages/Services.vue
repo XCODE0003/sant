@@ -51,7 +51,7 @@ const services = [
 </script>
 
 <template>
-    <AppLayout title="Услуги - АкватЭрия">
+    <AppLayout title="Услуги - Акватэрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
@@ -181,4 +181,3 @@ const services = [
         </div>
     </AppLayout>
 </template>
-

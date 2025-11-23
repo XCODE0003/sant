@@ -16,7 +16,7 @@ const toggleFaq = (number) => {
 </script>
 
 <template>
-    <AppLayout title="Оплата и доставка - АкватЭрия">
+    <AppLayout title="Оплата и доставка - Акватэрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->

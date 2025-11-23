@@ -129,7 +129,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
 </script>
 
 <template>
-    <AppLayout title="Каталог товаров - АкватЭрия">
+    <AppLayout title="Каталог товаров - Акватэрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <div class="md:py-8 container px-4 py-6 mx-auto">
@@ -456,4 +456,3 @@ const isInCart = (product) => shopStore.isInCart(product.id);
         </div>
     </AppLayout>
 </template>
-

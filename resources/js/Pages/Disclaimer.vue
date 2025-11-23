@@ -4,7 +4,7 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <AppLayout title="Правовая информация - АкватЭрия">
+    <AppLayout title="Правовая информация - Акватэрия">
         <div class="container mx-auto px-4 py-10 md:py-16">
             <div class="max-w-4xl mx-auto">
                 <!-- Title -->
@@ -139,4 +139,3 @@ import { Link } from '@inertiajs/vue3';
         </div>
     </AppLayout>
 </template>
-

@@ -10,13 +10,13 @@ const breadcrumbs = [
 </script>
 
 <template>
-    <AppLayout title="О нас - АкватЭрия">
+    <AppLayout title="О нас - Акватэрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
         <section class="bg-primary md:py-16 py-10 text-white">
             <div class="container px-4 mx-auto text-center">
-                <h1 class="md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold">АкватЭрия</h1>
+                <h1 class="md:text-4xl lg:text-5xl md:mb-6 mb-4 text-2xl font-bold">Акватэрия</h1>
                 <p class="md:text-lg lg:text-xl mx-auto max-w-3xl text-sm text-blue-100">
                     Территория воды и тепла
                     Предлагаем широкий ассортимент продукции в сантехнической сфере

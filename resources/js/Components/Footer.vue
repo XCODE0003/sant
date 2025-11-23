@@ -19,7 +19,7 @@ defineProps({
                             <i class="fas fa-wrench text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold">АкватЭрия</h3>
+                            <h3 class="text-2xl font-bold">Акватэрия</h3>
                             <p class="text-gray-400">Территория воды и тепла</p>
                         </div>
                     </div>
@@ -72,7 +72,9 @@ defineProps({
                             <Link href="/services" class="hover:text-white text-gray-400 transition-colors">Услуги</Link>
                         </li>
                         <li><a href="#" class="hover:text-white text-gray-400 transition-colors">Гарантии</a></li>
-                        <li><a href="#" class="hover:text-white text-gray-400 transition-colors">Возврат товара</a></li>
+                        <li>
+                            <Link href="/returns" class="hover:text-white text-gray-400 transition-colors">Обмен и возврат</Link>
+                        </li>
                         <li>
                             <Link href="/contacts" class="hover:text-white text-gray-400 transition-colors">Контакты</Link>
                         </li>
@@ -81,7 +83,7 @@ defineProps({
 
                 <div itemscope itemtype="https://schema.org/Organization">
                     <h4 class="mb-6 text-xl font-semibold">Контакты</h4>
-                    <meta itemprop="name" content="АкватЭрия" />
+                    <meta itemprop="name" content="Акватэрия" />
                     <div class="space-y-4">
                         <div class="flex items-center" itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <i class="fas fa-map-marker-alt text-primary mr-3" aria-hidden="true"></i>
@@ -112,7 +114,7 @@ defineProps({
 
             <div class="pt-8 mt-12 border-t border-gray-800">
                 <div class="mb-4 text-center">
-                    <p class="text-gray-400">&copy; 2024 АкватЭрия. Все права защищены.</p>
+                    <p class="text-gray-400">&copy; 2024 Акватэрия. Все права защищены.</p>
                 </div>
                 <div class="text-sm text-center text-gray-500">
                     <p class="mb-2">
@@ -131,4 +133,3 @@ defineProps({
         </div>
     </footer>
 </template>
-

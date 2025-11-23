@@ -33,7 +33,7 @@ const submitForm = () => {
 </script>
 
 <template>
-    <AppLayout title="Контакты - АкватЭрия">
+    <AppLayout title="Контакты - Акватэрия">
         <Breadcrumbs :items="breadcrumbs" />
 
         <!-- Hero Section -->
@@ -51,7 +51,7 @@ const submitForm = () => {
             <!-- Contact Info -->
             <section>
                 <div style="position:relative;overflow:hidden;">
-                    <a href="https://yandex.ru/maps/org/akvateriya/40304279763/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">АкватЭрия</a><a href="https://yandex.ru/maps/56/chelyabinsk/category/plumbing_shop/184107711/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">Магазин сантехники в Челябинске</a><a href="https://yandex.ru/maps/56/chelyabinsk/category/pipes_and_accessories/184107495/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;">Трубы и комплектующие в Челябинске</a><iframe src="https://yandex.ru/map-widget/v1/org/akvateriya/40304279763/?ll=61.383806%2C55.175304&z=16" width="100%" height="400" frameborder="1" allowfullscreen="true" style="position:relative; border-radius: 12px;" class="mb-5"></iframe></div>
+                    <a href="https://yandex.ru/maps/org/akvateriya/40304279763/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Акватэрия</a><a href="https://yandex.ru/maps/56/chelyabinsk/category/plumbing_shop/184107711/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:14px;">Магазин сантехники в Челябинске</a><a href="https://yandex.ru/maps/56/chelyabinsk/category/pipes_and_accessories/184107495/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:28px;">Трубы и комплектующие в Челябинске</a><iframe src="https://yandex.ru/map-widget/v1/org/akvateriya/40304279763/?ll=61.383806%2C55.175304&z=16" width="100%" height="400" frameborder="1" allowfullscreen="true" style="position:relative; border-radius: 12px;" class="mb-5"></iframe></div>
                 <div class="sm:grid-cols-2 lg:grid-cols-4 md:gap-6 lg:gap-8 grid grid-cols-1 gap-4">
                     <div class="md:rounded-2xl md:p-8 hover:shadow-2xl p-6 text-center bg-white rounded-xl shadow-lg transition-shadow">
                         <div class="bg-primary/10 md:w-20 md:h-20 md:mb-6 flex justify-center items-center mx-auto mb-4 w-16 h-16 rounded-full">
@@ -205,4 +205,3 @@ const submitForm = () => {
         </div>
     </AppLayout>
 </template>
-

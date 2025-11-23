@@ -8,7 +8,7 @@ import { useShopStore } from '@/stores/useShopStore';
 defineProps({
     title: {
         type: String,
-        default: 'АкватЭрия',
+        default: 'Акватэрия',
     },
 });
 
@@ -38,4 +38,3 @@ const footerCategories = computed(() => page.props.footerCategories ?? []);
         <Footer :categories="footerCategories" />
     </div>
 </template>
-

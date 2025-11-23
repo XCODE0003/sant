@@ -55,7 +55,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
 const structuredData = computed(() => ({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'АкватЭрия - Территория воды и тепла',
+    name: 'Акватэрия - Территория воды и тепла',
     url: window.location.origin,
     description: 'Продажа сантехники в Челябинске с 2001 года. Широкий ассортимент, доставка, установка, гарантия до 5 лет.',
     potentialAction: {
@@ -68,7 +68,7 @@ const structuredData = computed(() => ({
     },
     publisher: {
         '@type': 'Organization',
-        name: 'АкватЭрия',
+        name: 'Акватэрия',
         logo: {
             '@type': 'ImageObject',
             url: `${window.location.origin}/apple-touch-icon.png`,
@@ -92,17 +92,17 @@ const breadcrumbStructuredData = {
 
 <template>
     <Head>
-        <title>АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года</title>
+        <title>Акватэрия - Сантехника в Челябинске | Продажа с 2001 года</title>
         <meta name="description" content="Купить сантехнику в Челябинске с доставкой и установкой. Большой выбор санитарно-технического оборудования, комплектующих и запчастей. Работаем с 2001 года. Гарантия до 5 лет. ☎ +7 (951) 235-32-26" />
-        <meta property="og:title" content="АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года" />
+        <meta property="og:title" content="Акватэрия - Сантехника в Челябинске | Продажа с 2001 года" />
         <meta property="og:description" content="Купить сантехнику в Челябинске с доставкой и установкой. Большой выбор санитарно-технического оборудования. Работаем с 2001 года. Гарантия до 5 лет." />
         <meta property="og:url" content="https://akvatera.ru/" />
-        <meta name="twitter:title" content="АкватЭрия - Сантехника в Челябинске" />
+        <meta name="twitter:title" content="Акватэрия - Сантехника в Челябинске" />
         <meta name="twitter:description" content="Купить сантехнику в Челябинске с доставкой и установкой. Работаем с 2001 года. Гарантия до 5 лет." />
         <link rel="canonical" href="https://akvatera.ru/" />
     </Head>
 
-    <AppLayout title="АкватЭрия - Сантехника в Челябинске | Продажа с 2001 года">
+    <AppLayout title="Акватэрия - Сантехника в Челябинске | Продажа с 2001 года">
         <component :is="'script'" type="application/ld+json">{{ JSON.stringify(structuredData) }}</component>
         <component :is="'script'" type="application/ld+json">{{ JSON.stringify(breadcrumbStructuredData) }}</component>
         <!-- Hero Section -->
@@ -391,4 +391,3 @@ const breadcrumbStructuredData = {
         </section>
     </AppLayout>
 </template>
-

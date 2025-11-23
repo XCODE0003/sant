@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     {{-- SEO Meta Tags --}}
-    <meta name="description" content="АкватЭрия - продажа сантехники в Челябинске с 2001 года. Широкий ассортимент качественной сантехники, комплектующих и запчастей. Доставка, установка, гарантия до 5 лет.">
+    <meta name="description" content="Акватэрия - продажа сантехники в Челябинске с 2001 года. Широкий ассортимент качественной сантехники, комплектующих и запчастей. Доставка, установка, гарантия до 5 лет.">
     <meta name="keywords" content="сантехника челябинск, купить сантехнику, санитарно-техническое оборудование, комплектующие для сантехники, запчасти сантехника, доставка сантехники, установка сантехники">
     <meta name="author" content="ИП Нурисламова Наталья Владимировна">
     <meta name="robots" content="index, follow">
@@ -16,7 +16,7 @@
 
     {{-- Open Graph Meta Tags --}}
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="АкватЭрия">
+    <meta property="og:site_name" content="Акватэрия">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:image" content="{{ asset('favicon.png') }}">
     <meta property="og:image:width" content="1200">
@@ -91,7 +91,7 @@
         $organizationData = [
             '@context' => 'https://schema.org',
             '@type' => 'Store',
-            'name' => 'АкватЭрия',
+            'name' => 'Акватэрия',
             'description' => 'Продажа сантехники и санитарно-технического оборудования в Челябинске',
             'url' => url('/'),
             'logo' => asset('favicon.png'),
@@ -127,7 +127,7 @@
             '@context' => 'https://schema.org',
             '@type' => 'LocalBusiness',
             'name' => 'ИП Нурисламова Наталья Владимировна',
-            'alternateName' => 'АкватЭрия',
+            'alternateName' => 'Акватэрия',
             'url' => url('/'),
             'telephone' => '+7-951-235-32-26',
             'email' => 'qwer-75@mail.ru',
