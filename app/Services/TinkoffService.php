@@ -166,13 +166,10 @@ class TinkoffService
         // Убираем Token
         unset($data['Token']);
 
-        // Убираем вложенные структуры (по документации)
         unset($data['DATA'], $data['Data'], $data['Receipt'], $data['Shops']);
 
-        // Приводим ВСЕ значения к строкам
         foreach ($data as $key => $value) {
             if (is_bool($value)) {
-                // TBank ВСЕГДА отправляет "true" или "false" строкой
                 $data[$key] = $value ? 'true' : 'false';
             } else {
                 $data[$key] = (string) $value;

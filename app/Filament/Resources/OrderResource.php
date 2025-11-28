@@ -261,9 +261,7 @@ class OrderResource extends Resource
                 ->modalDescription('Вы уверены, что хотите отменить этот платеж?')
                 ->visible(fn (Order $record): bool =>
                     $record->payment_method === 'card'
-                    && !empty($record->payment_id)
-                    && $record->payment_status !== 'REVERSED'
-                    && $record->payment_status !== 'CANCELED'
+                    && $record->status !== Order::STATUS_PENDING
                 )
                 ->action(function (Order $record) {
                     try {
