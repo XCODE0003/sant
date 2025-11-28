@@ -210,7 +210,10 @@ const stopTimer = () => {
 onMounted(() => {
     if (hasPaymentUrl.value && order.value.status === 'pending') {
         startTimer();
-        if (order.value.status === 'pending' && timeRemaining.value && timeRemaining.value.total < 20000) {
+        if (
+            order.value.status === 'pending' &&
+            (new Date().getTime() - new Date(order.value.created_at).getTime() < 20000)
+        ) {
             window.location.href = paymentUrl.value;
         }
     }
