@@ -99,7 +99,6 @@ class CheckoutController extends Controller
                     'payment_data' => $paymentData,
                 ]);
 
-                dd($paymentData);
                 if (!empty($paymentData['PaymentURL'])) {
                     return redirect()
                     ->route('orders.show', ['order' => $order->uuid])
@@ -114,7 +113,6 @@ class CheckoutController extends Controller
                     'error' => $e->getMessage(),
                 ]);
 
-                dd($e);
                 return redirect()
                     ->route('orders.show', ['order' => $order->uuid])
                     ->with('error', 'Ошибка инициализации платежа. Мы свяжемся с вами для уточнения деталей.');
