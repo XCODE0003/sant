@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 $assetPath = static function (?string $path): ?string {
     if (! $path) {
@@ -471,7 +471,7 @@ Route::get('dashboard', function () {
 
 Route::post('/payment/notification', [PaymentController::class, 'notification'])
     ->name('payment.notification')
-    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+    ->withoutMiddleware(VerifyCsrfToken::class);
 
 Route::get('/payment/success', [PaymentController::class, 'success'])
     ->name('payment.success');
