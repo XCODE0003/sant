@@ -161,33 +161,37 @@ class TinkoffService
             return false;
         }
 
-        $token = $data['Token'];
+        $receivedToken = $data['Token'];
         unset($data['Token']);
 
-        // У Tinkoff всё приводится к строкам, НИКОГДА не к числам или bool
+        // Удаляем вложенные — строго по документации
+        unset($data['DATA'], $data['Data'], $data['Receipt'], $data['Shops']);
+
+        // Приводим ВСЕ значения к строкам!
         array_walk_recursive($data, function (&$value) {
             if (!is_array($value)) {
                 $value = (string) $value;
             }
         });
 
-        // удалить вложенные структуры (как требует документация)
-        unset($data['DATA'], $data['Receipt'], $data['Shops']);
+        // Добавляем пароль
+        $data['Password'] = (string) $this->password;
 
-        $data['Password'] = $this->password;
-
+        // Сортировка по ключу
         ksort($data);
 
-        $flatten = '';
-        foreach ($data as $val) {
-            if (!is_array($val)) {
-                $flatten .= (string) $val;
+        // Конкатенация
+        $string = '';
+        foreach ($data as $v) {
+            if (!is_array($v)) {
+                $string .= $v;
             }
         }
 
-        $calculated = hash('sha256', $flatten);
+        $calculated = hash('sha256', $string);
 
-        return hash_equals($calculated, $token);
+        return hash_equals($calculated, $receivedToken);
     }
+
 
 }
