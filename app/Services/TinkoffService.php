@@ -58,7 +58,7 @@ class TinkoffService
         Log::info('Tinkoff Init Request', ['payload' => $payload]);
 
         $response = Http::post("{$this->baseUrl}/Init", $payload);
-
+        dd($response->json());
         $json = $response->json();
 
         if (!$response->successful() || empty($json['Success'])) {
