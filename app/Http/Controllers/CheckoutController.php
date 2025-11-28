@@ -99,7 +99,7 @@ class CheckoutController extends Controller
                     'payment_data' => $paymentData,
                 ]);
 
-
+                dd($paymentData);
                 if (!empty($paymentData['PaymentURL'])) {
                     return redirect()
                     ->route('orders.show', ['order' => $order->uuid])
