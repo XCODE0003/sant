@@ -64,6 +64,10 @@ class Order extends Model
         'delivery_comment',
         'comment',
         'agreement',
+        'payment_id',
+        'payment_status',
+        'payment_url',
+        'payment_data',
     ];
 
     protected $casts = [
@@ -71,6 +75,7 @@ class Order extends Model
         'total_price' => 'decimal:2',
         'delivery_is_private_house' => 'boolean',
         'agreement' => 'boolean',
+        'payment_data' => 'array',
     ];
 
     protected static function booted(): void

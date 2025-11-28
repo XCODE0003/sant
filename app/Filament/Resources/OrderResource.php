@@ -252,6 +252,43 @@ class OrderResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
+                Tables\Actions\Action::make('cancel_payment')
+                ->label('Отменить платеж')
+                ->icon('heroicon-o-x-circle')
+                ->color('danger')
+                ->requiresConfirmation()
+                ->modalHeading('Отменить платеж')
+                ->modalDescription('Вы уверены, что хотите отменить этот платеж?')
+                ->visible(fn (Order $record): bool =>
+                    $record->payment_method === 'card'
+                    && !empty($record->payment_id)
+                    && $record->payment_status !== 'REVERSED'
+                    && $record->payment_status !== 'CANCELED'
+                )
+                ->action(function (Order $record) {
+                    try {
+                        $tinkoffService = app(\App\Services\TinkoffService::class);
+
+                        $result = $tinkoffService->cancelPayment($record->payment_id);
+
+                        $record->update([
+                            'payment_status' => $result['Status'] ?? 'REVERSED',
+                            'payment_data' => array_merge($record->payment_data ?? [], $result),
+                            'status' => Order::STATUS_CANCELLED,
+                        ]);
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Платеж успешно отменен')
+                            ->success()
+                            ->send();
+                    } catch (\Exception $e) {
+                        \Filament\Notifications\Notification::make()
+                            ->title('Ошибка отмены платежа')
+                            ->body($e->getMessage())
+                            ->danger()
+                            ->send();
+                    }
+                }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([]),

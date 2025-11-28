@@ -75,6 +75,8 @@ class OrderTrackingController extends Controller
                 'total_price' => (float) $order->total_price,
                 'created_at' => optional($order->created_at)->toIso8601String(),
                 'updated_at' => optional($order->updated_at)->toIso8601String(),
+                'payment_data' => $order->payment_data,
+                'payment_url' => $order->payment_url,
             ],
             'statusTimeline' => $statusTimeline,
             'isCancelled' => $order->status === Order::STATUS_CANCELLED,

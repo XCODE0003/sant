@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderTrackingController;
+use App\Http\Controllers\PaymentController;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Product;
@@ -467,4 +468,14 @@ Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::post('/payment/notification', [PaymentController::class, 'notification'])
+    ->name('payment.notification')
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
+
+Route::get('/payment/success', [PaymentController::class, 'success'])
+    ->name('payment.success');
+
+Route::get('/payment/fail', [PaymentController::class, 'fail'])
+    ->name('payment.fail');
 require __DIR__ . '/settings.php';

@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use App\Services\TinkoffService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class CheckoutController extends Controller
 {
+    public function __construct(
+        private TinkoffService $tinkoffService
+    ) {
+    }
     public function index(): Response
     {
         return Inertia::render('Checkout');
@@ -42,13 +47,13 @@ class CheckoutController extends Controller
         $itemsCount = $items->sum('quantity');
 
         $address = $data['address'] ?? [];
-
         $paymentMethod = $data['payment_method'] ?? 'cash';
 
         if ($paymentMethod !== 'cash') {
-            $paymentMethod = 'cash';
+            $paymentMethod = 'card';
         }
 
+        // Создаем заказ
         $order = Order::create([
             'customer_first_name' => $data['first_name'],
             'customer_last_name' => $data['last_name'],
@@ -70,6 +75,51 @@ class CheckoutController extends Controller
             'comment' => $data['comment'] ?? null,
             'agreement' => (bool) $data['agreement'],
         ]);
+
+        // Если оплата картой, инициируем платеж
+
+
+        if ($paymentMethod === 'card') {
+            try {
+                $paymentData = $this->tinkoffService->initPayment([
+                    'amount' => $totalPrice,
+                    'order_id' => $order->number,
+                    'description' => "Оплата заказа №{$order->number}",
+                    'phone' => $data['phone'],
+                    'email' => $data['email'],
+                    'success_url' => route('payment.success', ['OrderId' => $order->number]),
+                    'fail_url' => route('payment.fail', ['OrderId' => $order->number]),
+                ]);
+
+                // Сохраняем данные платежа
+                $order->update([
+                    'payment_id' => $paymentData['PaymentId'] ?? null,
+                    'payment_status' => $paymentData['Status'] ?? null,
+                    'payment_url' => $paymentData['PaymentURL'] ?? null,
+                    'payment_data' => $paymentData,
+                ]);
+
+
+                if (!empty($paymentData['PaymentURL'])) {
+                    return redirect()
+                    ->route('orders.show', ['order' => $order->uuid])
+                    ->with([
+                        'success' => 'Заказ успешно оформлен! Мы свяжемся с вами в ближайшее время.',
+                        'payment_url' => $paymentData['PaymentURL'],
+                    ]);
+                }
+            } catch (\Exception $e) {
+                \Log::error('Tinkoff payment init error', [
+                    'order_id' => $order->id,
+                    'error' => $e->getMessage(),
+                ]);
+
+
+                return redirect()
+                    ->route('orders.show', ['order' => $order->uuid])
+                    ->with('error', 'Ошибка инициализации платежа. Мы свяжемся с вами для уточнения деталей.');
+            }
+        }
 
         return redirect()
             ->route('orders.show', ['order' => $order->uuid])

@@ -17,7 +17,11 @@ return [
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
-
+    'tinkoff' => [
+        'terminal_key' => env('TINKOFF_TERMINAL_KEY'),
+        'password' => env('TINKOFF_PASSWORD'),
+        'test_mode' => env('TINKOFF_TEST_MODE', false),
+    ],
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],
