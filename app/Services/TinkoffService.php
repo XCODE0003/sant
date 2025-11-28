@@ -161,37 +161,39 @@ class TinkoffService
             return false;
         }
 
-        $receivedToken = $data['Token'];
+        $received = $data['Token'];
+
+        // Убираем Token
         unset($data['Token']);
 
-        // Удаляем вложенные — строго по документации
+        // Убираем вложенные структуры (по документации)
         unset($data['DATA'], $data['Data'], $data['Receipt'], $data['Shops']);
 
-        // Приводим ВСЕ значения к строкам!
-        array_walk_recursive($data, function (&$value) {
-            if (!is_array($value)) {
-                $value = (string) $value;
+        // Приводим ВСЕ значения к строкам
+        foreach ($data as $key => $value) {
+            if (is_bool($value)) {
+                // TBank ВСЕГДА отправляет "true" или "false" строкой
+                $data[$key] = $value ? 'true' : 'false';
+            } else {
+                $data[$key] = (string) $value;
             }
-        });
+        }
 
         // Добавляем пароль
         $data['Password'] = (string) $this->password;
 
-        // Сортировка по ключу
+        // Сортировка по ключам
         ksort($data);
 
-        // Конкатенация
-        $string = '';
-        foreach ($data as $v) {
-            if (!is_array($v)) {
-                $string .= $v;
-            }
-        }
+        // Конкатенация только значений
+        $string = implode('', $data);
 
+        // sha256
         $calculated = hash('sha256', $string);
 
-        return hash_equals($calculated, $receivedToken);
+        return hash_equals($calculated, $received);
     }
+
 
 
 }
