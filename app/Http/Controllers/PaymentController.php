@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\TelegramService;
 use App\Services\TinkoffService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -59,6 +60,7 @@ class PaymentController extends Controller
         } elseif ($status === 'REVERSED' || $status === 'CANCELED') {
             $order->update(['status' => Order::STATUS_CANCELLED]);
         }
+        (new TelegramService())->notifyPayment($order);
 
         // Возвращаем OK
         return response('OK', 200);
