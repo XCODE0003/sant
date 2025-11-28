@@ -25,6 +25,10 @@ return [
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],
+    'telegram' => [
+        'token' => env('TELEGRAM_BOT_TOKEN', ''),
+        'admins' => array_filter(explode(',', env('TELEGRAM_ADMIN_CHATS', ''))),
+    ],
 
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),

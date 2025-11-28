@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use App\Services\TelegramService;
 use App\Services\TinkoffService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -77,7 +78,7 @@ class CheckoutController extends Controller
         ]);
 
         // Если оплата картой, инициируем платеж
-
+        (new TelegramService())->notifyOrder($order);
 
         if ($paymentMethod === 'card') {
             try {
