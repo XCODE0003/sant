@@ -155,22 +155,39 @@ class TinkoffService
         return $string;
     }
 
-    /**
-     * Проверка токена в уведомлении (Callback)
-     */
     public function verifyNotificationToken(array $data): bool
     {
         if (!isset($data['Token'])) {
             return false;
         }
 
-        $receivedToken = $data['Token'];
-        unset($data['Token'], $data['Receipt'], $data['Data'], $data['DATA']);
+        $token = $data['Token'];
+        unset($data['Token']);
+
+        // У Tinkoff всё приводится к строкам, НИКОГДА не к числам или bool
+        array_walk_recursive($data, function (&$value) {
+            if (!is_array($value)) {
+                $value = (string) $value;
+            }
+        });
+
+        // удалить вложенные структуры (как требует документация)
+        unset($data['DATA'], $data['Receipt'], $data['Shops']);
 
         $data['Password'] = $this->password;
 
-        $token = hash('sha256', $this->flattenForToken($data));
+        ksort($data);
 
-        return hash_equals($token, $receivedToken);
+        $flatten = '';
+        foreach ($data as $val) {
+            if (!is_array($val)) {
+                $flatten .= (string) $val;
+            }
+        }
+
+        $calculated = hash('sha256', $flatten);
+
+        return hash_equals($calculated, $token);
     }
+
 }
