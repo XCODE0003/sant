@@ -208,7 +208,7 @@ const stopTimer = () => {
 };
 
 onMounted(() => {
-    if (hasPaymentUrl.value) {
+    if (hasPaymentUrl.value && order.value.status === 'pending') {
         startTimer();
         if(order.value.status === 'pending') {
             window.location.href = paymentUrl.value;
@@ -402,7 +402,7 @@ const goToPayment = () => {
 
                 <aside class="md:space-y-6 space-y-4">
                     <!-- Payment Block -->
-                    <div v-if="hasPaymentUrl" class="md:p-6 md:rounded-2xl p-5 bg-amber-100 to-orange-50 rounded-xl border-2 border-amber-200 shadow-lg">
+                    <div v-if="hasPaymentUrl && order.status === 'pending'" class="md:p-6 md:rounded-2xl p-5 bg-amber-100 to-orange-50 rounded-xl border-2 border-amber-200 shadow-lg">
                         <div class="md:mb-4 flex gap-2 items-center mb-3">
                             <i class="fas fa-clock text-lg text-amber-600"></i>
                             <h2 class="md:text-lg text-base font-semibold text-amber-900">Требуется оплата</h2>
