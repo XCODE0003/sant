@@ -167,7 +167,7 @@ class ProductResource extends Resource
                     ->query(fn (Builder $query) => $query->where('discount', '>', 0)),
                 Tables\Filters\Filter::make('new_products')
                     ->label('Новые товары')
-                    ->query(fn (Builder $query) => $query->where('created_at', '>=', now()->subDays(2))),
+                    ->query(fn (Builder $query) => $query->where('created_at', '>=', now()->subDays(14))->orderBy('id', 'desc')),
             ])
             ->headerActions([
                 Tables\Actions\Action::make('importSpreadsheet')
