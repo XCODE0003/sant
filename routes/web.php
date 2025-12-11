@@ -189,7 +189,8 @@ Route::get('/', function (Request $request) use ($mapProduct, $mapCategory, $map
         ->active()
         ->with('category')
         ->withAvg('reviews', 'rating')
-        ->random(8)
+        ->withCount('reviews')
+        ->inRandomOrder()
         ->take(8)
         ->get();
 
