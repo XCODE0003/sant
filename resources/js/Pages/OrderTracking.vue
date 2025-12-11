@@ -486,7 +486,7 @@ const goToPayment = () => {
                             </div>
                             <div class="flex gap-2 items-center">
                                 <i class="fas fa-envelope text-primary flex-shrink-0"></i>
-                                <a href="mailto:info@shopsant.ru" class="hover:underline font-semibold break-all">info@shopsant.ru</a>
+                                <a href="mailto:qwer-75@mail.ru" class="hover:underline font-semibold break-all">qwer-75@mail.ru</a>
                             </div>
                         </div>
                     </div>
