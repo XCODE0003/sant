@@ -165,6 +165,9 @@ class ProductResource extends Resource
                 Tables\Filters\Filter::make('has_discount')
                     ->label('Есть скидка')
                     ->query(fn (Builder $query) => $query->where('discount', '>', 0)),
+                Tables\Filters\Filter::make('new_products')
+                    ->label('Новые товары')
+                    ->query(fn (Builder $query) => $query->where('created_at', '>=', now()->subDays(2))),
             ])
             ->headerActions([
                 Tables\Actions\Action::make('importSpreadsheet')
