@@ -220,7 +220,7 @@ const isInCart = (product) => shopStore.isInCart(product.id);
                                             v-if="getProductImage(product)"
                                             :src="getProductImage(product)"
                                             :alt="product.title"
-                                            class="object-cover w-full h-full"
+                                            class="w-full h-full"
                                         />
                                         <i v-else class="fas fa-faucet text-6xl text-gray-300"></i>
                                     </div>

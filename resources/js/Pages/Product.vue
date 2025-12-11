@@ -238,7 +238,7 @@ watch(
                                 :class="currentImage === image ? 'border-primary' : 'border-transparent hover:border-primary active:border-primary'"
                                 @click="selectImage(image)"
                             >
-                                <img v-if="image" :src="image" :alt="product.title" class="object-cover w-full h-full" />
+                                <img v-if="image" :src="image" :alt="product.title" class="w-full h-full" />
                                 <i v-else class="fas fa-faucet text-2xl text-gray-300"></i>
                             </button>
                             <div

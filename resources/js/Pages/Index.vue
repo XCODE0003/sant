@@ -231,7 +231,7 @@ const breadcrumbStructuredData = {
                             :src="getProductImage(product)"
                             :alt="`${product.title} - купить в Челябинске`"
                             :title="product.title"
-                            class="object-cover w-full h-full"
+                            class="w-full h-full"
                             loading="lazy"
                         />
                         <i v-else class="fas fa-faucet text-6xl text-gray-300" aria-hidden="true"></i>

@@ -364,7 +364,7 @@ const goToPayment = () => {
                                 class="sm:flex-row sm:items-center md:gap-4 md:p-4 md:rounded-xl flex flex-col gap-3 p-3 rounded-lg border border-gray-200"
                             >
                                 <div class="sm:w-16 md:w-20 md:h-20 flex overflow-hidden flex-shrink-0 justify-center items-center w-full h-16 bg-gray-100 rounded-lg">
-                                    <img v-if="item.image" :src="item.image" :alt="item.title" class="object-cover w-full h-full" />
+                                    <img v-if="item.image" :src="item.image" :alt="item.title" class=" w-full h-full" />
                                     <i v-else class="fas fa-box md:text-2xl text-xl text-gray-300"></i>
                                 </div>
                                 <div class="flex-1 space-y-1 min-w-0">

@@ -59,7 +59,7 @@ const clearCart = () => {
                                 v-if="item.image"
                                 :src="item.image"
                                 :alt="item.title"
-                                class="object-cover w-full h-full"
+                                class="w-full h-full"
                             />
                             <i v-else class="fas fa-faucet text-3xl text-gray-300"></i>
                         </div>
