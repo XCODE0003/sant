@@ -286,6 +286,7 @@ class OrderResource extends Resource
                             ->send();
                     }
                 }),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([]),
