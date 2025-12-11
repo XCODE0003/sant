@@ -104,7 +104,7 @@ defineProps({
                         </div>
                         <div class="flex items-center" itemprop="openingHours" content="Mo-Fr 08:30-17:30">
                             <i class="fas fa-clock text-primary mr-3" aria-hidden="true"></i>
-                            <span class="text-gray-400">Пн-Пт: 8:30-17:30</span>
+                            <span class="text-gray-400">Пн-Пт: 8:30-17:30, Сб-Вс: 9:00-16:30</span>
                         </div>
                     </div>
                 </div>
