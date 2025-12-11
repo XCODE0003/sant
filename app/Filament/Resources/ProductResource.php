@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Csv as CsvReader;
 use Throwable;
 
 class ProductResource extends Resource
@@ -166,15 +167,23 @@ class ProductResource extends Resource
                     ->query(fn (Builder $query) => $query->where('discount', '>', 0)),
             ])
             ->headerActions([
-                Tables\Actions\Action::make('importXls')
-                    ->label('Импорт из XLS')
+                Tables\Actions\Action::make('importSpreadsheet')
+                    ->label('Импорт из файла')
                     ->icon('heroicon-o-arrow-up-tray')
-                    ->modalHeading('Импорт товаров из XLS отчёта 1С')
-                    ->modalDescription('Файл должен быть в формате *.xls. Категории и товары будут созданы или обновлены в соответствии с отчётом.')
+                    ->modalHeading('Импорт товаров из отчёта 1С')
+                    ->modalDescription('Поддерживаются форматы *.xls, *.xlsx и *.csv. Категории и товары будут созданы или обновлены в соответствии с отчётом.')
                     ->form([
                         Forms\Components\FileUpload::make('file')
                             ->label('Файл отчёта')
-                            ->acceptedFileTypes(['application/vnd.ms-excel', 'application/octet-stream', '.xls'])
+                            ->acceptedFileTypes([
+                                'application/vnd.ms-excel',
+                                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                                'text/csv',
+                                'application/octet-stream',
+                                '.xls',
+                                '.xlsx',
+                                '.csv',
+                            ])
                             ->directory('imports/products')
                             ->disk('local')
                             ->visibility('private')
@@ -198,7 +207,7 @@ class ProductResource extends Resource
                             ->helperText('Включите, чтобы перезаписывать названия существующих товаров.'),
                     ])
                     ->action(function (array $data): void {
-                        static::importProductsFromXls($data['file'], [
+                        static::importProductsFromFile($data['file'], [
                             'update_prices' => (bool) ($data['update_prices'] ?? false),
                             'add_products' => (bool) ($data['add_products'] ?? false),
                             'add_categories' => (bool) ($data['add_categories'] ?? false),
@@ -243,7 +252,7 @@ class ProductResource extends Resource
             ->withCount('reviews');
     }
 
-    protected static function importProductsFromXls(string $relativePath, array $options = []): void
+    protected static function importProductsFromFile(string $relativePath, array $options = []): void
     {
         $disk = Storage::disk('local');
         $fullPath = $disk->path($relativePath);
@@ -271,7 +280,16 @@ class ProductResource extends Resource
                 throw new \RuntimeException('Файл не найден. Загрузите его повторно.');
             }
 
-            $spreadsheet = IOFactory::load($fullPath);
+            $reader = IOFactory::createReaderForFile($fullPath);
+
+            if ($reader instanceof CsvReader) {
+                $reader->setInputEncoding('UTF-8');
+                $reader->setDelimiter(static::detectCsvDelimiter($fullPath));
+                $reader->setEnclosure('"');
+                $reader->setSheetIndex(0);
+            }
+
+            $spreadsheet = $reader->load($fullPath);
             $sheet = $spreadsheet->getActiveSheet();
             $rows = $sheet->toArray(null, true, true, true, true);
 
@@ -406,7 +424,7 @@ class ProductResource extends Resource
             $logContext['products_created'] = $createdProducts;
             $logContext['products_updated'] = $updatedProducts;
 
-            Log::info('XLS import completed', $logContext);
+            Log::info('Spreadsheet import completed', $logContext);
 
             Notification::make()
                 ->title('Импорт завершён')
@@ -414,7 +432,7 @@ class ProductResource extends Resource
                 ->success()
                 ->send();
         } catch (Throwable $exception) {
-            Log::error('XLS import failed', [
+            Log::error('Spreadsheet import failed', [
                 'exception' => $exception->getMessage(),
                 'trace' => $exception->getTraceAsString(),
                 'context' => $logContext,
@@ -430,6 +448,39 @@ class ProductResource extends Resource
                 $disk->delete($relativePath);
             }
         }
+    }
+
+    protected static function detectCsvDelimiter(string $path): string
+    {
+        $delimiters = [';', ',', "\t", '|'];
+        $scores = array_fill_keys($delimiters, 0);
+
+        if (! is_readable($path)) {
+            return ';';
+        }
+
+        $handle = fopen($path, 'r');
+
+        if (! $handle) {
+            return ';';
+        }
+
+        $lineCount = 0;
+
+        while (($line = fgets($handle)) !== false && $lineCount < 10) {
+            foreach ($delimiters as $delimiter) {
+                $scores[$delimiter] += substr_count($line, $delimiter);
+            }
+
+            $lineCount++;
+        }
+
+        fclose($handle);
+
+        arsort($scores);
+        $bestDelimiter = key($scores);
+
+        return $scores[$bestDelimiter] > 0 ? $bestDelimiter : ';';
     }
 
     protected static function parseNumber($value): ?float
