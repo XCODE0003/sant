@@ -350,7 +350,7 @@ const goToPayment = () => {
                             <div class="md:rounded-xl p-4 rounded-lg border border-gray-200">
                                 <h3 class="md:mb-3 md:text-sm mb-2 text-xs font-semibold tracking-wide text-gray-700 uppercase">Связь с магазином</h3>
                                 <p class="md:text-sm text-xs text-gray-600">Для изменения заказа свяжитесь с менеджером по телефону:</p>
-                                <p class="text-primary md:text-lg mt-2 text-base font-semibold">+7 (351) 000-00-00</p>
+                                <p class="text-primary md:text-lg mt-2 text-base font-semibold">+7 (951) 235-32-26</p>
                             </div>
                         </div>
                     </div>
@@ -482,7 +482,7 @@ const goToPayment = () => {
                         <div class="md:mt-4 md:space-y-3 md:text-sm mt-3 space-y-2 text-xs text-gray-800">
                             <div class="flex gap-2 items-center">
                                 <i class="fas fa-phone text-primary flex-shrink-0"></i>
-                                <a href="tel:+73510000000" class="hover:underline font-semibold break-all">+7 (351) 000-00-00</a>
+                                <a href="tel:+79512353226" class="hover:underline font-semibold break-all">+7 (951) 235-32-26</a>
                             </div>
                             <div class="flex gap-2 items-center">
                                 <i class="fas fa-envelope text-primary flex-shrink-0"></i>
