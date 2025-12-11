@@ -468,6 +468,14 @@ onBeforeUnmount(() => {
                     <li>
                         <Link href="/contacts" class="hover:text-primary transition-colors">Контакты</Link>
                     </li>
+                    <div class="flex justify-center space-x-4">
+                            <a href="https://t.me/san3306" class="bg-primary flex justify-center items-center p-3 w-12 h-12 text-white rounded-full transition-colors">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            <a href="https://vk.com/club232308766" class="bg-primary flex justify-center items-center p-3 w-12 h-12 text-white rounded-full transition-colors">
+                                <i class="fab fa-vk"></i>
+                            </a>
+                        </div>
                 </ul>
             </nav>
         </div>
