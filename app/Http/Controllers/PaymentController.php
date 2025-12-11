@@ -60,7 +60,9 @@ class PaymentController extends Controller
         } elseif ($status === 'REVERSED' || $status === 'CANCELED') {
             $order->update(['status' => Order::STATUS_CANCELLED]);
         }
-        (new TelegramService())->notifyPayment($order);
+        if($order->status === Order::STATUS_CONFIRMED) {
+            (new TelegramService())->notifyPayment($order);
+        }
 
         // Возвращаем OK
         return response('OK', 200);
