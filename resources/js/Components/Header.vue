@@ -296,10 +296,8 @@ onBeforeUnmount(() => {
 
             <!-- Main header -->
             <div class="max-md:flex-col max-md:gap-5 flex justify-between items-center py-4">
-                <Link href="/" class="hover:opacity-80 flex items-center transition-opacity">
-                    <div class="bg-primary p-3 mr-4 text-white rounded-lg">
-                        <i class="fas fa-wrench text-2xl"></i>
-                    </div>
+                <Link href="/" class="hover:opacity-80 flex gap-2 items-center transition-opacity">
+                <img src="/images/logo.jpg" alt="Акватэрия" class="w-14 h-14 rounded-full">
                     <div>
                         <div class="bg-accent w-fit p-0.5 px-1 rounded-xl">
                             <h1 class="text-2xl font-bold text-[#f1e811]">Акват<span class="text-primary">Э</span>рия</h1>

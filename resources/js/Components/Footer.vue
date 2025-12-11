@@ -14,10 +14,8 @@ defineProps({
         <div class="container px-4 mx-auto">
             <div class="md:grid-cols-2 lg:grid-cols-4 grid grid-cols-1 gap-8">
                 <div>
-                    <div class="flex items-center mb-6">
-                        <div class="bg-primary p-3 mr-4 text-white rounded-lg">
-                            <i class="fas fa-wrench text-2xl"></i>
-                        </div>
+                    <div class="flex gap-2 items-center mb-6">
+                      <img src="/images/logo.jpg" alt="Акватэрия" class="w-14 h-14 rounded-full">
                         <div>
                             <h3 class="text-2xl font-bold">Акватэрия</h3>
                             <p class="text-gray-400">Территория воды и тепла</p>
