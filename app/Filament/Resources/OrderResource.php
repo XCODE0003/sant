@@ -161,7 +161,6 @@ class OrderResource extends Resource
                                     ]),
                             ])
                             ->addable(false)
-                            ->deletable(false)
                             ->reorderable(false)
                             ->default(function (?Order $record): array {
                                 if (! $record) {
