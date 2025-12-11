@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
                 <div class="max-md:grid flex grid-cols-2 items-center space-x-4">
                     <span class="max-md:justify-center flex items-center text-xs">
                         <i class="fas fa-clock text-primary mr-2"></i>
-                        Пн-Пт: 8:30-17:30
+                        Пн-Пт: 8:30-17:30, Сб-Вс: 9:00-16:30
                     </span>
                     <a href="https://yandex.ru/maps/-/CLSA4MNv" class="max-md:justify-center flex items-center text-xs">
                         <i class="fas fa-map-marker-alt text-primary mr-2"></i>
